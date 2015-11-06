@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="/theme/css/style.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/css/pygments.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/css/font-awesome.min.css">
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="" />
+<meta name="author" content="Ted Sheibar" />
+<meta name="description" content="Useful Bash trick to help with everyday scripting" />
+<meta name="keywords" content="bash, builtin, test, echo">
+<meta property="og:site_name" content="tedops"/>
+<meta property="og:title" content="Bash Builtin Override Trick"/>
+<meta property="og:description" content="Useful Bash trick to help with everyday scripting"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/bash-builtin-trick.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2015-11-06 00:00:00-08:00"/>
+<meta property="article:modified_time" content="2015-11-06 00:00:00-08:00"/>
+<meta property="article:author" content="/author/ted-sheibar.html">
+<meta property="article:section" content="Bash"/>
+<meta property="article:tag" content="bash"/>
+<meta property="article:tag" content="builtin"/>
+<meta property="article:tag" content="test"/>
+<meta property="article:tag" content="echo"/>
+<meta property="og:image" content="">  <title>tedops &ndash; Bash Builtin Override Trick</title>
+</head>
+<body>
+  <aside>
+    <div>
+      <!-- a href="" -->
+      <a href="/index.html">
+        <img src="/theme/img/profile.png" alt="ted sheibar" title="ted sheibar">
+      </a>
+      <h1><a href="">ted sheibar</a></h1>
+      <p>Release Engineer  •  SRE  •  Python Enthusiast</p>
+      <nav>
+        <ul class="list">
+          <li><a href="https://www.docker.com/" target="_blank">Docker</a></li>
+          <li><a href="https://www.python.org/" target="_blank">Python</a></li>
+          <li><a href="https://docs.saltstack.com/en/latest/" target="_blank">SaltStack</a></li>
+        </ul>
+      </nav>
+      <ul class="social">
+        <li><a class="sc-github" href="http://github.com/tedops" target="_blank"><i class="fa fa-github"></i></a></li>
+        <li><a class="sc-linkedin" href="https://www.linkedin.com/pub/theodore-sheibar/76/363/215" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-twitter" href="http://twitter.com/tedops" target="_blank"><i class="fa fa-twitter"></i></a></li>
+      </ul>
+    </div>
+  </aside>
+  <main>
+    <nav>
+      <!-- a href="">Home</a -->
+      <a href="/index.html">Home</a>
+      <a href="/archives.html">Archives</a>
+      <a href="/authors.html">Authors</a>
+      <a href="/categories.html">Categories</a>
+      <a href="/tags.html">Tags</a>
+    </nav>
+
+<article>
+  <header>
+    <h1 id="bash-builtin-trick">Bash Builtin Override Trick</h1>
+    <p>Posted on Fri 06 November 2015 in <a href="/category/bash.html">Bash</a></p>
+  </header>
+  <div>
+    <p>Over the years, I have found this trick useful for various things and wanted to share them.</p>
+<p>I just used this again today to help with some error checking (probably because I've been on a <a class="reference external" href="http://chimera.labs.oreilly.com/books/1234000000754/index.html">Python + TDD</a> kick lately...), and it allowed me to debug &amp; fix an issue rather quickly.</p>
+<div class="section" id="what-is-a-bash-builtin">
+<h2>What is a Bash Builtin?</h2>
+<p>According to <a class="reference external" href="http://www.tldp.org/LDP/abs/html/internal.html">tldp.org</a>, bash builtins are:</p>
+<pre class="literal-block">
+A builtin is a command contained within the Bash tool set, literally built in.
+This is either for performance reasons -- builtins execute faster than external
+commands, which usually require forking off [1] a separate process -- or
+because a particular builtin needs direct access to the shell internals.
+</pre>
+<p>You likely use them everyday without even realizing they are builtins - like <tt class="docutils literal">echo</tt>, <tt class="docutils literal">test</tt>, <tt class="docutils literal">source</tt>, and <tt class="docutils literal">unset</tt>. What's not as well-known is that these can be overridden.</p>
+</div>
+<div class="section" id="testing-the-return-value">
+<h2>Testing The Return Value</h2>
+<p>While building a chroot jail, I had 3 separate sections where yum was installing particular packages that I had labelled <tt class="docutils literal">prep</tt>, <tt class="docutils literal">setup</tt>, and <tt class="docutils literal">main</tt> accordingly. The problem was that packages in the <tt class="docutils literal">main</tt> section were failing to install because of dependency resolution errors.</p>
+<p>Typical problem, but nothing looked out of the ordinary to me in the output.</p>
+<p>So, here's what I ended up doing:</p>
+<pre class="code bash literal-block">
+<span class="c">#!/bin/bash
+</span>
+<span class="nb">test</span><span class="o">()</span>
+<span class="o">{</span>
+    <span class="nb">builtin test</span> <span class="nv">$1</span> -eq <span class="m">0</span> <span class="o">||</span> <span class="o">{</span>
+        <span class="nb">echo</span> <span class="s2">&quot;[ERROR] </span><span class="nv">$2</span><span class="s2">&quot;</span>
+        <span class="nb">exit</span> <span class="nv">$2</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c"># PREP
+</span>yum -y install centos rpm-python
+<span class="nb">test</span> <span class="s2">&quot;</span><span class="nv">$?</span><span class="s2">&quot;</span> <span class="s2">&quot;Yum installation error (PREP). See above.&quot;</span>
+
+<span class="c"># SETUP
+</span>yum -y install rpm-build
+<span class="nb">test</span> <span class="s2">&quot;</span><span class="nv">$?</span><span class="s2">&quot;</span> <span class="s2">&quot;Yum installation error (SETUP). See above.&quot;</span>
+
+<span class="c"># MAIN
+</span>yum -y install my-cool-package
+<span class="nb">test</span> <span class="s2">&quot;</span><span class="nv">$?</span><span class="s2">&quot;</span> <span class="s2">&quot;Yum installation error (MAIN). See above.&quot;</span>
+</pre>
+<p>Overriding the <tt class="docutils literal">test</tt> builtin allowed me to abide by the DRY principle by having a single method to test return values. <strong>Notice</strong> that the overriding is achieved by using the <tt class="docutils literal">builtin</tt> reserved keyword to execute the builtin version of the command you want to use.</p>
+<p>After I ran this, it turned out that two packages - one in PREP and the other in SETUP - were unsigned, which was causing the failure. Without these checks in place, it would have taken a very long time for me to comb through the 100s of dependencies coupled with the packages we were trying to install.</p>
+<p>Using comments to label sections, and then adding that label to the error message, really helped me quickly narrow down where the real problem was...which was NOT depsolving problems with my-cool-package as I originally thought.</p>
+</div>
+<div class="section" id="echo-logging">
+<h2>Echo &amp; Logging</h2>
+<p>Another useful trick is overriding the <tt class="docutils literal">echo</tt> command. Here's what I generally use for logging output with bash scripts:</p>
+<pre class="code Bash literal-block">
+<span class="c">#!/bin/bash
+</span>
+<span class="nb">echo</span><span class="o">()</span>
+<span class="o">{</span>
+    <span class="nb">builtin echo</span> <span class="s2">&quot;[</span><span class="k">$(</span>date <span class="s1">'+%Y-%m-%d %H:%M:%S'</span><span class="k">)</span><span class="s2">] </span><span class="nv">$*</span><span class="s2">&quot;</span>
+<span class="o">}</span>
+
+<span class="nb">echo</span> <span class="s2">&quot;Installing packages...&quot;</span>
+yum -y install my-cool-package rpm-build
+</pre>
+<p>This prints a timestamp for every call to <tt class="docutils literal">echo</tt>.</p>
+<p>This trick can likely be extended many ways, but I've found these two use cases to be the most applicable and useful for everyday script writing, debugging, and running.</p>
+</div>
+
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/bash.html">bash</a>
+      <a href="/tag/builtin.html">builtin</a>
+      <a href="/tag/test.html">test</a>
+      <a href="/tag/echo.html">echo</a>
+    </p>
+  </div>
+</article>
+
+    <footer>
+      <p>&copy; Ted Sheibar </p>
+<p>Built using <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a></p>    </footer>
+  </main>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "name": "Bash Builtin Override Trick",
+  "headline": "Bash Builtin Override Trick",
+  "datePublished": "2015-11-06 00:00:00-08:00",
+  "dateModified": "2015-11-06 00:00:00-08:00",
+  "author": {
+    "@type": "Person",
+    "name": "Ted Sheibar",
+    "url": "/author/ted-sheibar.html"
+  },
+  "image": "{{ SITEURL }}/{{ THEME_STATIC_DIR }}/img/profile.png",
+  "url": "/bash-builtin-trick.html",
+  "description": "Useful Bash trick to help with everyday scripting"
+}
+</script></body>
+</html>

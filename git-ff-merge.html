@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="/theme/css/style.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/css/pygments.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/css/font-awesome.min.css">
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="" />
+<meta name="author" content="Ted Sheibar" />
+<meta name="description" content="Brief discussion about when to use --no-ff or not when merging in Git" />
+<meta name="keywords" content="git, merge, enterprise">
+<meta property="og:site_name" content="tedops"/>
+<meta property="og:title" content="Git Fast-Forward Merges"/>
+<meta property="og:description" content="Brief discussion about when to use --no-ff or not when merging in Git"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/git-ff-merge.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2015-11-05 00:00:00-08:00"/>
+<meta property="article:modified_time" content="2015-11-05 00:30:00-08:00"/>
+<meta property="article:author" content="/author/ted-sheibar.html">
+<meta property="article:section" content="Git"/>
+<meta property="article:tag" content="git"/>
+<meta property="article:tag" content="merge"/>
+<meta property="article:tag" content="enterprise"/>
+<meta property="og:image" content="">  <title>tedops &ndash; Git Fast-Forward Merges</title>
+</head>
+<body>
+  <aside>
+    <div>
+      <!-- a href="" -->
+      <a href="/index.html">
+        <img src="/theme/img/profile.png" alt="ted sheibar" title="ted sheibar">
+      </a>
+      <h1><a href="">ted sheibar</a></h1>
+      <p>Release Engineer  •  SRE  •  Python Enthusiast</p>
+      <nav>
+        <ul class="list">
+          <li><a href="https://www.docker.com/" target="_blank">Docker</a></li>
+          <li><a href="https://www.python.org/" target="_blank">Python</a></li>
+          <li><a href="https://docs.saltstack.com/en/latest/" target="_blank">SaltStack</a></li>
+        </ul>
+      </nav>
+      <ul class="social">
+        <li><a class="sc-github" href="http://github.com/tedops" target="_blank"><i class="fa fa-github"></i></a></li>
+        <li><a class="sc-linkedin" href="https://www.linkedin.com/pub/theodore-sheibar/76/363/215" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-twitter" href="http://twitter.com/tedops" target="_blank"><i class="fa fa-twitter"></i></a></li>
+      </ul>
+    </div>
+  </aside>
+  <main>
+    <nav>
+      <!-- a href="">Home</a -->
+      <a href="/index.html">Home</a>
+      <a href="/archives.html">Archives</a>
+      <a href="/authors.html">Authors</a>
+      <a href="/categories.html">Categories</a>
+      <a href="/tags.html">Tags</a>
+    </nav>
+
+<article>
+  <header>
+    <h1 id="git-ff-merge">Git Fast-Forward Merges</h1>
+    <p>Posted on Thu 05 November 2015 in <a href="/category/git.html">Git</a></p>
+  </header>
+  <div>
+    <div class="section" id="the-scenario">
+<h2>The Scenario</h2>
+<p>You've developed and released a tool that people have downloaded and found useful. So useful, in fact, that they have begun contributing to your project.</p>
+<p>After weeks of making no commits, you get your first pull request (PR) and see that it looks great. Time to integrate it into your project. What now?</p>
+<p>Since there have been no commits on <tt class="docutils literal">master</tt> since the contributor forked your project, the work to merge in the PR is trivial. Or is it?</p>
+<p>Whether you realize it or not, the choice you make now can affect your Git history. What is the choice? To fast-foward or not fast-forward merge.</p>
+</div>
+<div class="section" id="fast-forward-merge">
+<h2>Fast-Forward Merge</h2>
+<p>Because there have been no commits on <tt class="docutils literal">master</tt> since the PR was submitted, the <tt class="docutils literal">HEAD</tt> pointer on <tt class="docutils literal">master</tt> can be &quot;fast-forwarded&quot; to point to the final commit on the PR. Looking at the log of <tt class="docutils literal">master</tt> then will show a linear history as a series of uninterrupted commits.</p>
+</div>
+<div class="section" id="non-fast-forward-merge-no-ff">
+<h2>Non-Fast-Forward Merge (<tt class="docutils literal"><span class="pre">--no-ff</span></tt>)</h2>
+<p>In contrast, using the <tt class="docutils literal"><span class="pre">--no-ff</span></tt> flag when merging adds a merge commit when done, preserving a more &quot;true&quot; lineage (referred to as <strong>explicit branches</strong>). Looking at the log of <tt class="docutils literal">master</tt> will then show that a branch was merged into it. Plus, you get the added bonus of being able to revert cleanly just by reverting the merge commit.</p>
+</div>
+<div class="section" id="which-is-better">
+<h2>Which is Better?</h2>
+<p>Some tools, like Github, force <tt class="docutils literal"><span class="pre">--no-ff</span></tt> when committing pull requests, because they prefer to preserve explicit branches. This does makes sense, as the merge commit that's created after merging makes it very obvious from which pull request the commit came from.</p>
+<p>However, doing that moves away from a linear history, which makes doing any &quot;archaeology&quot; slightly more difficult (e.g. <tt class="docutils literal">log</tt>, <tt class="docutils literal">bisect</tt>, <tt class="docutils literal">blame</tt>, etc). While fast-forwarding does make it more difficult to find the source of a merged branch, it's not as much of an issue if development teams continue to keep detailed commit messages, including ticket references and PR URLs.</p>
+<p>The debate about which one is better usually centers on whether or not to keep as &quot;clean&quot; of a history as possible. I personally prefer fast-forward merging &amp; cleaner history in my local fork, because being able to more easily debug a historical source control problem is more valuable to me than knowing which person conducted a merge. (If needed, <tt class="docutils literal">git blame</tt> would provide all of the details necessary to track down the person who could likely help fix an issue/revert commits.)</p>
+<p>However, in an enterprise context, I prefer having <tt class="docutils literal"><span class="pre">--no-ff</span></tt> server-side, as it's advantageous to have more clarity from where/when certain branches - and their correlating PRs - came from.</p>
+<p>What do you think?</p>
+</div>
+
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/git.html">git</a>
+      <a href="/tag/merge.html">merge</a>
+      <a href="/tag/enterprise.html">enterprise</a>
+    </p>
+  </div>
+</article>
+
+    <footer>
+      <p>&copy; Ted Sheibar </p>
+<p>Built using <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a></p>    </footer>
+  </main>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "name": "Git Fast-Forward Merges",
+  "headline": "Git Fast-Forward Merges",
+  "datePublished": "2015-11-05 00:00:00-08:00",
+  "dateModified": "2015-11-05 00:30:00-08:00",
+  "author": {
+    "@type": "Person",
+    "name": "Ted Sheibar",
+    "url": "/author/ted-sheibar.html"
+  },
+  "image": "{{ SITEURL }}/{{ THEME_STATIC_DIR }}/img/profile.png",
+  "url": "/git-ff-merge.html",
+  "description": "Brief discussion about when to use --no-ff or not when merging in Git"
+}
+</script></body>
+</html>
