@@ -86,25 +86,25 @@ because a particular builtin needs direct access to the shell internals.
 <p>Typical problem, but nothing looked out of the ordinary to me in the output.</p>
 <p>So, here's what I ended up doing:</p>
 <pre class="code bash literal-block">
-<span class="c">#!/bin/bash
+<span class="ch">#!/bin/bash
 </span>
-<span class="nb">test</span><span class="o">()</span>
+test<span class="o">()</span>
 <span class="o">{</span>
-    <span class="nb">builtin test</span> <span class="nv">$1</span> -eq <span class="m">0</span> <span class="o">||</span> <span class="o">{</span>
+    <span class="nb">builtin</span> <span class="nb">test</span> <span class="nv">$1</span> -eq <span class="m">0</span> <span class="o">||</span> <span class="o">{</span>
         <span class="nb">echo</span> <span class="s2">&quot;[ERROR] </span><span class="nv">$2</span><span class="s2">&quot;</span>
         <span class="nb">exit</span> <span class="nv">$2</span>
     <span class="o">}</span>
 <span class="o">}</span>
 
-<span class="c"># PREP
+<span class="c1"># PREP
 </span>yum -y install centos rpm-python
 <span class="nb">test</span> <span class="s2">&quot;</span><span class="nv">$?</span><span class="s2">&quot;</span> <span class="s2">&quot;Yum installation error (PREP). See above.&quot;</span>
 
-<span class="c"># SETUP
+<span class="c1"># SETUP
 </span>yum -y install rpm-build
 <span class="nb">test</span> <span class="s2">&quot;</span><span class="nv">$?</span><span class="s2">&quot;</span> <span class="s2">&quot;Yum installation error (SETUP). See above.&quot;</span>
 
-<span class="c"># MAIN
+<span class="c1"># MAIN
 </span>yum -y install my-cool-package
 <span class="nb">test</span> <span class="s2">&quot;</span><span class="nv">$?</span><span class="s2">&quot;</span> <span class="s2">&quot;Yum installation error (MAIN). See above.&quot;</span>
 </pre>
@@ -116,11 +116,11 @@ because a particular builtin needs direct access to the shell internals.
 <h2>Echo &amp; Logging</h2>
 <p>Another useful trick is overriding the <tt class="docutils literal">echo</tt> command. Here's what I generally use for logging output with bash scripts:</p>
 <pre class="code Bash literal-block">
-<span class="c">#!/bin/bash
+<span class="ch">#!/bin/bash
 </span>
-<span class="nb">echo</span><span class="o">()</span>
+echo<span class="o">()</span>
 <span class="o">{</span>
-    <span class="nb">builtin echo</span> <span class="s2">&quot;[</span><span class="k">$(</span>date <span class="s1">'+%Y-%m-%d %H:%M:%S'</span><span class="k">)</span><span class="s2">] </span><span class="nv">$*</span><span class="s2">&quot;</span>
+    <span class="nb">builtin</span> <span class="nb">echo</span> <span class="s2">&quot;[</span><span class="k">$(</span>date <span class="s1">'+%Y-%m-%d %H:%M:%S'</span><span class="k">)</span><span class="s2">] </span><span class="nv">$*</span><span class="s2">&quot;</span>
 <span class="o">}</span>
 
 <span class="nb">echo</span> <span class="s2">&quot;Installing packages...&quot;</span>

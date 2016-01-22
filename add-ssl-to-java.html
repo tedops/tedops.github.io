@@ -71,13 +71,13 @@
     <p>This is something that crops up from time to time and is annoying to go Stack Overflow mining each time I need it. So I'm putting it here for my sake, and hope it helps you too:</p>
 <pre class="code bash literal-block">
 <span class="nv">SITE</span><span class="o">=</span><span class="s2">&quot;github.com&quot;</span>
-<span class="c"># get github cert from the server
-</span>openssl x509 -in &lt;<span class="o">(</span>openssl s_client -connect <span class="nv">$SITE</span>:443 -prexit 2&gt;/dev/null<span class="o">)</span> -out ~/<span class="nv">$SITE</span>.crt
-<span class="c"># add it to the java keystore (yes, the storepass is literally 'changeit')
-</span>/usr/java/default/bin/keytool -noprompt -importcert -file ~/<span class="nv">$SITE</span>.crt <span class="se">\
+<span class="c1"># get github cert from the server
+</span>openssl x509 -in &lt;<span class="o">(</span>openssl s_client -connect $SITE:443 -prexit 2&gt;/dev/null<span class="o">)</span> -out ~/$SITE.crt
+<span class="c1"># add it to the java keystore (yes, the storepass is literally 'changeit')
+</span>/usr/java/default/bin/keytool -noprompt -importcert -file ~/$SITE.crt <span class="se">\
 </span>    -alias github -keystore /usr/java/default/jre/lib/security/cacerts -storepass changeit
-<span class="c"># clean up
-</span>rm ~/<span class="nv">$SITE</span>.crt
+<span class="c1"># clean up
+</span>rm ~/$SITE.crt
 </pre>
 <p><strong>NOTE:</strong> Remove the <tt class="docutils literal"><span class="pre">-noprompt</span></tt> flag if you'd prefer to see the cert before accepting it.</p>
 

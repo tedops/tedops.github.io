@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="/theme/css/style.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/css/pygments.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/css/font-awesome.min.css">
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="" />
+<meta name="author" content="Ted Sheibar" />
+<meta name="description" content="The missing "How-To" on configuring collectd to use rrd" />
+<meta name="keywords" content="collectd, rrd, rrdtool, centos">
+<meta property="og:site_name" content="tedops"/>
+<meta property="og:title" content="Setting Up Collectd to Use RRD"/>
+<meta property="og:description" content="The missing "How-To" on configuring collectd to use rrd"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/setting-up-collectd-to-use-rrd.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2016-01-22 00:00:00-08:00"/>
+<meta property="article:modified_time" content="2015-11-22 00:00:00-08:00"/>
+<meta property="article:author" content="/author/ted-sheibar.html">
+<meta property="article:section" content="ops"/>
+<meta property="article:tag" content="collectd"/>
+<meta property="article:tag" content="rrd"/>
+<meta property="article:tag" content="rrdtool"/>
+<meta property="article:tag" content="centos"/>
+<meta property="og:image" content="">  <title>tedops &ndash; Setting Up Collectd to Use RRD</title>
+</head>
+<body>
+  <aside>
+    <div>
+      <!-- a href="" -->
+      <a href="/index.html">
+        <img src="/theme/img/profile.png" alt="ted sheibar" title="ted sheibar">
+      </a>
+      <h1><a href="">ted sheibar</a></h1>
+      <p>Release Engineer  •  SRE  •  Python Enthusiast</p>
+      <nav>
+        <ul class="list">
+          <li><a href="https://www.docker.com/" target="_blank">Docker</a></li>
+          <li><a href="https://www.python.org/" target="_blank">Python</a></li>
+          <li><a href="https://docs.saltstack.com/en/latest/" target="_blank">SaltStack</a></li>
+        </ul>
+      </nav>
+      <ul class="social">
+        <li><a class="sc-github" href="http://github.com/tedops" target="_blank"><i class="fa fa-github"></i></a></li>
+        <li><a class="sc-linkedin" href="https://www.linkedin.com/pub/theodore-sheibar/76/363/215" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-twitter" href="http://twitter.com/tedops" target="_blank"><i class="fa fa-twitter"></i></a></li>
+      </ul>
+    </div>
+  </aside>
+  <main>
+    <nav>
+      <!-- a href="">Home</a -->
+      <a href="/index.html">Home</a>
+      <a href="/archives.html">Archives</a>
+      <a href="/authors.html">Authors</a>
+      <a href="/categories.html">Categories</a>
+      <a href="/tags.html">Tags</a>
+    </nav>
+
+<article>
+  <header>
+    <h1 id="setting-up-collectd-to-use-rrd">Setting Up Collectd to Use RRD</h1>
+    <p>Posted on Fri 22 January 2016 in <a href="/category/ops.html">ops</a></p>
+  </header>
+  <div>
+    <p>There are a lot of blog posts out there about collectd can be <em>enabled</em> to output to RRD files, but nothing I found spelled out the actual steps.</p>
+<p>I recommend reading all the docs you can find on both rrd and collectd, but to help spare your (and my) motivation, here are steps I followed to set it all up.</p>
+<div class="section" id="step-1-install">
+<h2>Step 1: Install</h2>
+<p>This is pretty straightforward:</p>
+<pre class="literal-block">
+# yum install collectd rrdtool rrdtool-perl collectd-rrdtool
+</pre>
+<p>What took me forever was figuring out that I needed <tt class="docutils literal"><span class="pre">collectd-rrdtool</span></tt>. This package solely installs the file <tt class="docutils literal">/usr/lib64/collectd/rrdtool.so</tt>, which allows collectd to use RRDs as write targets.</p>
+</div>
+<div class="section" id="step-2-configure">
+<h2>Step 2: Configure</h2>
+<p>This is also pretty straightforward, except for collectd's slightly awkward commenting pattern in its <tt class="docutils literal">/etc/collectd.conf</tt>.</p>
+<p>Basically, one hash (&quot;#&quot;) means you have that library (shared object) installed, but disabled. Two hashes (&quot;##&quot;) means the library is not installed, nor enabled.</p>
+<p>First, backup the original:</p>
+<pre class="literal-block">
+# cp /etc/collectd.conf /etc/collectd.conf.orig
+</pre>
+<p>Then, in <tt class="docutils literal">/etc/collectd.conf</tt>, uncomment the line:</p>
+<pre class="literal-block">
+# LoadPlugin rrdtool
+</pre>
+<p>Next, configure the plugin (should be commented out in the same file). Change the values to whatever you like:</p>
+<pre class="literal-block">
+&lt;Plugin rrdtool&gt;
+        DataDir &quot;/var/lib/collectd/rrd&quot;
+        CreateFilesAsync false
+        CacheTimeout 120
+        CacheFlush   30
+        WritesPerSecond 50
+&lt;/Plugin&gt;
+</pre>
+</div>
+<div class="section" id="step-3-test">
+<h2>Step 3: Test</h2>
+<p>Collectd has a couple of handy flags to test your config. From the CLI help:</p>
+<pre class="literal-block">
+-t              Test config and exit.
+-T              Test plugin read and exit.
+</pre>
+<p>So, I like to run both separately to make sure everything is well-formed:</p>
+<pre class="literal-block">
+# collectd -t ; echo $?
+0
+# collectd -T ; echo $?
+0
+</pre>
+<p>If you don't see zeroes as return codes, go back and verify nothing is obviously wrong (fat-fingered something). You can always restore from <tt class="docutils literal">/etc/collectd.conf.orig</tt> you made in Step 2.</p>
+</div>
+<div class="section" id="step-4-profit">
+<h2>Step 4: Profit</h2>
+<p>Now you can just run collectd:</p>
+<pre class="literal-block">
+# collectd
+</pre>
+<p>For the paranoid crew among us (read: SREs/ops folks), you can check to ensure the process is running:</p>
+<pre class="literal-block">
+# ps aux | grep [c]ollectd
+root     22855  0.2  0.0 899636  3768 ?        Ssl  Jan19  11:01 collectd
+</pre>
+<p>You can also poke around the directory you defined in the plugin block to see the RRD files themselves.</p>
+<p>That's it!</p>
+<p>Next step will be to hook up graphite to these rrd files and see what's happening with the system. That'll hopefully be in another blog post.</p>
+</div>
+<div class="section" id="quick-troubleshooting">
+<h2>Quick Troubleshooting</h2>
+<blockquote>
+&quot;I don't see RRD files being generated.&quot;</blockquote>
+<p>Make sure you have collectd-rrdtool installed. Check for the existence of the file <tt class="docutils literal">/usr/lib64/collectd/rrdtool.so</tt>.</p>
+<p>If that file doesn't exist, use your system's package manager to determine what provides that file.</p>
+<blockquote>
+&quot;The system log says 'Available write targets: [none]'&quot;</blockquote>
+<p>Collectd is saying it can't write out to the system. Fix this either by enabling the rrdtool plugin (as outlined in this post), or one of the <tt class="docutils literal">write_*</tt> plugins.</p>
+</div>
+
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/collectd.html">collectd</a>
+      <a href="/tag/rrd.html">rrd</a>
+      <a href="/tag/rrdtool.html">rrdtool</a>
+      <a href="/tag/centos.html">centos</a>
+    </p>
+  </div>
+</article>
+
+    <footer>
+      <p>&copy; Ted Sheibar </p>
+<p>Built using <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a></p>    </footer>
+  </main>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "name": "Setting Up Collectd to Use RRD",
+  "headline": "Setting Up Collectd to Use RRD",
+  "datePublished": "2016-01-22 00:00:00-08:00",
+  "dateModified": "2015-11-22 00:00:00-08:00",
+  "author": {
+    "@type": "Person",
+    "name": "Ted Sheibar",
+    "url": "/author/ted-sheibar.html"
+  },
+  "image": "{{ SITEURL }}/{{ THEME_STATIC_DIR }}/img/profile.png",
+  "url": "/setting-up-collectd-to-use-rrd.html",
+  "description": "The missing "How-To" on configuring collectd to use rrd"
+}
+</script></body>
+</html>
