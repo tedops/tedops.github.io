@@ -87,9 +87,9 @@
 </pre>
 <p>Then, in <tt class="docutils literal">/etc/collectd.conf</tt>, uncomment the line:</p>
 <pre class="literal-block">
-# LoadPlugin rrdtool
+LoadPlugin rrdtool
 </pre>
-<p>Next, configure the plugin (should be commented out in the same file). Change the values to whatever you like:</p>
+<p>Next, uncomment and configure the plugin (should be commented out in the same file). Change the values to whatever you like:</p>
 <pre class="literal-block">
 &lt;Plugin rrdtool&gt;
         DataDir &quot;/var/lib/collectd/rrd&quot;
