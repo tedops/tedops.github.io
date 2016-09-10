@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>tedops</title><link href="http://tedops.github.io/" rel="alternate"></link><link href="http://tedops.github.io/feeds/salt.atom.xml" rel="self"></link><id>http://tedops.github.io/</id><updated>2016-02-04T00:00:00-08:00</updated><entry><title>How To Find the Default Active Ethernet Interface in a Salt State</title><link href="http://tedops.github.io/how-to-find-default-active-ethernet-interface.html" rel="alternate"></link><updated>2016-02-04T00:00:00-08:00</updated><author><name>Ted Sheibar</name></author><id>tag:tedops.github.io,2016-02-04:how-to-find-default-active-ethernet-interface.html</id><summary type="html">&lt;p&gt;Recently, I was working with my friend &lt;a class="reference external" href="http://bobbylikeslinux.net/"&gt;Bobby&lt;/a&gt;, and we needed a way to find out the default ethernet interface on a host. We were trying to dynamically configure an iptables rule (forwarding port 80 requests to 8153) to use the host's active port when applying a &lt;a class="reference external" href="https://docs.saltstack.com/en/latest/topics/tutorials/starting_states.html"&gt;Salt state&lt;/a&gt;. We also wanted to avoid using &lt;a class="reference external" href="https://www.nginx.com/"&gt;nginx&lt;/a&gt; as a hammer to fix Yet Another Routing Problem.&lt;/p&gt;
+&lt;p&gt;Here's what we came up with:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+&lt;span class="o"&gt;{{&lt;/span&gt; salt&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'network.default_route'&lt;/span&gt;&lt;span class="o"&gt;](&lt;/span&gt;&lt;span class="s1"&gt;'inet'&lt;/span&gt;&lt;span class="o"&gt;)[&lt;/span&gt;0&lt;span class="o"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;'interface'&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;}}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;We saw this work in a Salt state by creating a dummy cmd.run block:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+iface-file:
+  cmd.run:
+    - name: &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="o"&gt;{{&lt;/span&gt; salt&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'network.default_route'&lt;/span&gt;&lt;span class="o"&gt;](&lt;/span&gt;&lt;span class="s1"&gt;'inet'&lt;/span&gt;&lt;span class="o"&gt;)[&lt;/span&gt;0&lt;span class="o"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;'interface'&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;}}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Which had a nice output of:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+----------
+          ID: iface-file
+    Function: cmd.run
+        Name: &lt;span class="nb"&gt;echo&lt;/span&gt; eth0
+      Result: True
+     Comment: Command &lt;span class="s2"&gt;&amp;quot;echo eth0&amp;quot;&lt;/span&gt; run
+     Started: 06:00:17.170601
+    Duration: 8.831 ms
+     Changes:
+              ----------
+              pid:
+                  4255
+              retcode:
+                  0
+              stderr:
+              stdout:
+                  eth0
+&lt;/pre&gt;
+&lt;p&gt;This can also be run on the command line, though we couldn't find a way to just get the token without resorting to grep|sed|cut:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+$ salt-call --local network.default_route inet
+
+local:
+    &lt;span class="p"&gt;|&lt;/span&gt;_
+      ----------
+      addr_family:
+          inet
+      destination:
+          0.0.0.0
+      flags:
+          UG
+      gateway:
+          10.0.2.2
+      interface:
+          eth0
+      netmask:
+          0.0.0.0
+&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; The &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--local&lt;/span&gt;&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;inet&lt;/tt&gt; parameters are optional. The &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--local&lt;/span&gt;&lt;/tt&gt; prevents from looking at master, and &lt;a class="reference external" href="https://github.com/saltstack/salt/blob/develop/salt/modules/network.py#L1289"&gt;according to Github&lt;/a&gt;, the only valid values are &lt;tt class="docutils literal"&gt;inet&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;inet6&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;This method was preferable to us rather than looping through &lt;tt class="docutils literal"&gt;ip4_interfaces&lt;/tt&gt; with &lt;tt class="docutils literal"&gt;grains.get&lt;/tt&gt;, because doing so would ignore the server's existing configuration (as set through iptables).&lt;/p&gt;
+</summary><category term="how-to"></category><category term="salt"></category><category term="active"></category><category term="default"></category><category term="interface"></category><category term="ethernet"></category><category term="ifconfig"></category><category term="eth0"></category></entry></feed>

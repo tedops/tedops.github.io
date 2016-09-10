@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>tedops</title><link href="http://tedops.github.io/" rel="alternate"></link><link href="http://tedops.github.io/feeds/git.atom.xml" rel="self"></link><id>http://tedops.github.io/</id><updated>2015-11-05T00:30:00-08:00</updated><entry><title>Git Fast-Forward Merges</title><link href="http://tedops.github.io/git-ff-merge.html" rel="alternate"></link><updated>2015-11-05T00:30:00-08:00</updated><author><name>Ted Sheibar</name></author><id>tag:tedops.github.io,2015-11-05:git-ff-merge.html</id><summary type="html">&lt;div class="section" id="the-scenario"&gt;
+&lt;h2&gt;The Scenario&lt;/h2&gt;
+&lt;p&gt;You've developed and released a tool that people have downloaded and found useful. So useful, in fact, that they have begun contributing to your project.&lt;/p&gt;
+&lt;p&gt;After weeks of making no commits, you get your first pull request (PR) and see that it looks great. Time to integrate it into your project. What now?&lt;/p&gt;
+&lt;p&gt;Since there have been no commits on &lt;tt class="docutils literal"&gt;master&lt;/tt&gt; since the contributor forked your project, the work to merge in the PR is trivial. Or is it?&lt;/p&gt;
+&lt;p&gt;Whether you realize it or not, the choice you make now can affect your Git history. What is the choice? To fast-foward or not fast-forward merge.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="fast-forward-merge"&gt;
+&lt;h2&gt;Fast-Forward Merge&lt;/h2&gt;
+&lt;p&gt;Because there have been no commits on &lt;tt class="docutils literal"&gt;master&lt;/tt&gt; since the PR was submitted, the &lt;tt class="docutils literal"&gt;HEAD&lt;/tt&gt; pointer on &lt;tt class="docutils literal"&gt;master&lt;/tt&gt; can be &amp;quot;fast-forwarded&amp;quot; to point to the final commit on the PR. Looking at the log of &lt;tt class="docutils literal"&gt;master&lt;/tt&gt; then will show a linear history as a series of uninterrupted commits.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="non-fast-forward-merge-no-ff"&gt;
+&lt;h2&gt;Non-Fast-Forward Merge (&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--no-ff&lt;/span&gt;&lt;/tt&gt;)&lt;/h2&gt;
+&lt;p&gt;In contrast, using the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--no-ff&lt;/span&gt;&lt;/tt&gt; flag when merging adds a merge commit when done, preserving a more &amp;quot;true&amp;quot; lineage (referred to as &lt;strong&gt;explicit branches&lt;/strong&gt;). Looking at the log of &lt;tt class="docutils literal"&gt;master&lt;/tt&gt; will then show that a branch was merged into it. Plus, you get the added bonus of being able to revert cleanly just by reverting the merge commit.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="which-is-better"&gt;
+&lt;h2&gt;Which is Better?&lt;/h2&gt;
+&lt;p&gt;Some tools, like Github, force &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--no-ff&lt;/span&gt;&lt;/tt&gt; when committing pull requests, because they prefer to preserve explicit branches. This does makes sense, as the merge commit that's created after merging makes it very obvious from which pull request the commit came from.&lt;/p&gt;
+&lt;p&gt;However, doing that moves away from a linear history, which makes doing any &amp;quot;archaeology&amp;quot; slightly more difficult (e.g. &lt;tt class="docutils literal"&gt;log&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;bisect&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;blame&lt;/tt&gt;, etc). While fast-forwarding does make it more difficult to find the source of a merged branch, it's not as much of an issue if development teams continue to keep detailed commit messages, including ticket references and PR URLs.&lt;/p&gt;
+&lt;p&gt;The debate about which one is better usually centers on whether or not to keep as &amp;quot;clean&amp;quot; of a history as possible. I personally prefer fast-forward merging &amp;amp; cleaner history in my local fork, because being able to more easily debug a historical source control problem is more valuable to me than knowing which person conducted a merge. (If needed, &lt;tt class="docutils literal"&gt;git blame&lt;/tt&gt; would provide all of the details necessary to track down the person who could likely help fix an issue/revert commits.)&lt;/p&gt;
+&lt;p&gt;However, in an enterprise context, I prefer having &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--no-ff&lt;/span&gt;&lt;/tt&gt; server-side, as it's advantageous to have more clarity from where/when certain branches - and their correlating PRs - came from.&lt;/p&gt;
+&lt;p&gt;What do you think?&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="git"></category><category term="merge"></category><category term="enterprise"></category></entry></feed>

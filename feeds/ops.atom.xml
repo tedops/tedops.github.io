@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>tedops</title><link href="http://tedops.github.io/" rel="alternate"></link><link href="http://tedops.github.io/feeds/ops.atom.xml" rel="self"></link><id>http://tedops.github.io/</id><updated>2015-11-22T00:00:00-08:00</updated><entry><title>Setting Up Collectd to Use RRD</title><link href="http://tedops.github.io/setting-up-collectd-to-use-rrd.html" rel="alternate"></link><updated>2015-11-22T00:00:00-08:00</updated><author><name>Ted Sheibar</name></author><id>tag:tedops.github.io,2016-01-22:setting-up-collectd-to-use-rrd.html</id><summary type="html">&lt;p&gt;There are a lot of blog posts out there about collectd can be &lt;em&gt;enabled&lt;/em&gt; to output to RRD files, but nothing I found spelled out the actual steps.&lt;/p&gt;
+&lt;p&gt;I recommend reading all the docs you can find on both rrd and collectd, but to help spare your (and my) motivation, here are steps I followed to set it all up.&lt;/p&gt;
+&lt;div class="section" id="step-1-install"&gt;
+&lt;h2&gt;Step 1: Install&lt;/h2&gt;
+&lt;p&gt;This is pretty straightforward:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+# yum install collectd rrdtool rrdtool-perl collectd-rrdtool
+&lt;/pre&gt;
+&lt;p&gt;What took me forever was figuring out that I needed &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;collectd-rrdtool&lt;/span&gt;&lt;/tt&gt;. This package solely installs the file &lt;tt class="docutils literal"&gt;/usr/lib64/collectd/rrdtool.so&lt;/tt&gt;, which allows collectd to use RRDs as write targets.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="step-2-configure"&gt;
+&lt;h2&gt;Step 2: Configure&lt;/h2&gt;
+&lt;p&gt;This is also pretty straightforward, except for collectd's slightly awkward commenting pattern in its &lt;tt class="docutils literal"&gt;/etc/collectd.conf&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;Basically, one hash (&amp;quot;#&amp;quot;) means you have that library (shared object) installed, but disabled. Two hashes (&amp;quot;##&amp;quot;) means the library is not installed, nor enabled.&lt;/p&gt;
+&lt;p&gt;First, backup the original:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+# cp /etc/collectd.conf /etc/collectd.conf.orig
+&lt;/pre&gt;
+&lt;p&gt;Then, in &lt;tt class="docutils literal"&gt;/etc/collectd.conf&lt;/tt&gt;, uncomment the line:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+LoadPlugin rrdtool
+&lt;/pre&gt;
+&lt;p&gt;Next, uncomment and configure the plugin (should be commented out in the same file). Change the values to whatever you like:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;lt;Plugin rrdtool&amp;gt;
+        DataDir &amp;quot;/var/lib/collectd/rrd&amp;quot;
+        CreateFilesAsync false
+        CacheTimeout 120
+        CacheFlush   30
+        WritesPerSecond 50
+&amp;lt;/Plugin&amp;gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="step-3-test"&gt;
+&lt;h2&gt;Step 3: Test&lt;/h2&gt;
+&lt;p&gt;Collectd has a couple of handy flags to test your config. From the CLI help:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+-t              Test config and exit.
+-T              Test plugin read and exit.
+&lt;/pre&gt;
+&lt;p&gt;So, I like to run both separately to make sure everything is well-formed:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+# collectd -t ; echo $?
+0
+# collectd -T ; echo $?
+0
+&lt;/pre&gt;
+&lt;p&gt;If you don't see zeroes as return codes, go back and verify nothing is obviously wrong (fat-fingered something). You can always restore from &lt;tt class="docutils literal"&gt;/etc/collectd.conf.orig&lt;/tt&gt; you made in Step 2.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="step-4-profit"&gt;
+&lt;h2&gt;Step 4: Profit&lt;/h2&gt;
+&lt;p&gt;Now you can just run collectd:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+# collectd
+&lt;/pre&gt;
+&lt;p&gt;For the paranoid crew among us (read: SREs/ops folks), you can check to ensure the process is running:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+# ps aux | grep [c]ollectd
+root     22855  0.2  0.0 899636  3768 ?        Ssl  Jan19  11:01 collectd
+&lt;/pre&gt;
+&lt;p&gt;You can also poke around the directory you defined in the plugin block to see the RRD files themselves.&lt;/p&gt;
+&lt;p&gt;That's it!&lt;/p&gt;
+&lt;p&gt;Next step will be to hook up graphite to these rrd files and see what's happening with the system. That'll hopefully be in another blog post.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="quick-troubleshooting"&gt;
+&lt;h2&gt;Quick Troubleshooting&lt;/h2&gt;
+&lt;blockquote&gt;
+&amp;quot;I don't see RRD files being generated.&amp;quot;&lt;/blockquote&gt;
+&lt;p&gt;Make sure you have collectd-rrdtool installed. Check for the existence of the file &lt;tt class="docutils literal"&gt;/usr/lib64/collectd/rrdtool.so&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;If that file doesn't exist, use your system's package manager to determine what provides that file.&lt;/p&gt;
+&lt;blockquote&gt;
+&amp;quot;The system log says 'Available write targets: [none]'&amp;quot;&lt;/blockquote&gt;
+&lt;p&gt;Collectd is saying it can't write out to the system. Fix this either by enabling the rrdtool plugin (as outlined in this post), or one of the &lt;tt class="docutils literal"&gt;write_*&lt;/tt&gt; plugins.&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="collectd"></category><category term="rrd"></category><category term="rrdtool"></category><category term="centos"></category></entry></feed>

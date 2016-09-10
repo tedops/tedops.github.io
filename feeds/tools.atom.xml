@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>tedops</title><link href="http://tedops.github.io/" rel="alternate"></link><link href="http://tedops.github.io/feeds/tools.atom.xml" rel="self"></link><id>http://tedops.github.io/</id><updated>2016-08-11T00:00:00-07:00</updated><entry><title>The Search for the Perfect Editor</title><link href="http://tedops.github.io/editor-search.html" rel="alternate"></link><updated>2016-08-11T00:00:00-07:00</updated><author><name>Ted Sheibar</name></author><id>tag:tedops.github.io,2016-08-11:editor-search.html</id><summary type="html">&lt;p&gt;I've been listening to &lt;a class="reference external" href="https://talkpython.fm"&gt;a fantastic podcast&lt;/a&gt; lately and, as one of the final questions, the interviewer always asks his guests what is their editor of choice. I get the question on a somewhat regular basis as well, and since that podcast got me trying different editors from my usual go-tos, I thought I'd write down my reasons for my editor choices.&lt;/p&gt;
+&lt;p&gt;First, I should probably say that I prefer being a jack of all trades. Most people when hearing that think, &amp;quot;and master of none,&amp;quot; therefore I must be a dilettante, dabbler, or similar. However, here's the full phrase:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Jack of all trades, master of none, though ofttimes better than master of one
+&lt;/pre&gt;
+&lt;p&gt;With that in mind, here are the tools I use for development.&lt;/p&gt;
+&lt;div class="section" id="the-cli"&gt;
+&lt;h2&gt;The CLI&lt;/h2&gt;
+&lt;p&gt;By experience, I'm a &amp;quot;vim&amp;quot; guy. Vim is fast, available on almost every command line, not as hard to learn as people say, and makes you feel connected to a rich Linux tradition.&lt;/p&gt;
+&lt;p&gt;That being said, I don't use it very much these days.&lt;/p&gt;
+&lt;p&gt;As a vim user, I extolled its advantages, and eschewed &amp;quot;Evil Emacs&amp;quot; any chance I got. Of course, at that time, I didn't know how to use emacs, so it was very easy for me to be disparaging towards it.&lt;/p&gt;
+&lt;p&gt;But as I continued in my career, I met many people whom I like and respect who were emacs users. Working with them told me that there must be something to emacs, since they were clearly no dummies, and I couldn't believe that they'd use inferior stuff for their day-to-day livelihood.&lt;/p&gt;
+&lt;p&gt;So I learned emacs. At least, enough to confidently use it if, say, edit a file on someone's (an emacs user's) computer while helping troubleshoot something. What I didn't expect was just how often I would continue emacs after I felt I had a sufficient amount of basic skill.&lt;/p&gt;
+&lt;p&gt;To me, perhaps the nicest advantage emacs has is its translation to the Linux command line. All of the navigation, word replacement, deletion, and undo are exactly the same. It added to a very seamless feel when going into emacs, probably because my brain didn't have to switch to a different set of muscle memory.&lt;/p&gt;
+&lt;p&gt;Usually when I mention this, I get the vim crowd yelling, &amp;quot;Yeah, but you can set your shell to use vim-style navigation.&amp;quot; That is true, however, have you ever used that in practice? I have and found it absolutely cumbersome and downright annoying. Who wants a separate command mode on the command line? I have yet to meet a self-proclaimed vim user who actually uses &lt;cite&gt;set -o vi&lt;/cite&gt; in the shell.&lt;/p&gt;
+&lt;p&gt;By the same token, I find emacs to be too heavyweight if I want to quickly make modifications to a file, or peruse something with a finer grain of control than piping to &lt;cite&gt;less&lt;/cite&gt;. Vim is very useful for those occasions, particularly since I can expect it to be installed on any server to which I need to connect (at least I know &lt;cite&gt;vi&lt;/cite&gt; will be installed, if not vim).&lt;/p&gt;
+&lt;p&gt;All of this can be summed up as: for config file editing/quick perusing, I use vim. For any more serious development/script writing, I'll use emacs (&lt;cite&gt;yum install emacs-nox&lt;/cite&gt;).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="the-gui"&gt;
+&lt;h2&gt;The GUI&lt;/h2&gt;
+&lt;p&gt;It may be helpful first to lay out the rough criteria I use when choosing an editor. For starters, I've grown to be very comfortable on the command line and feel the most in control there in terms of editing and navigation. Using a GUI is something I gladly walked away from when I &amp;quot;went Linux&amp;quot; from Windows, however Mac has helped me once-again realize the benefits of clicking buttons and dragging things for productivity instead of straight-up typing.&lt;/p&gt;
+&lt;p&gt;What do I look for? Nothing esoteric, I assure you: I want a text editor that's:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;fast&lt;/li&gt;
+&lt;li&gt;cross-platform&lt;/li&gt;
+&lt;li&gt;easy word-wrapping&lt;/li&gt;
+&lt;li&gt;lightly customizable&lt;/li&gt;
+&lt;li&gt;syntax highlighting&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I think we can all agree that's not a huge or unreasonable data set. I'd consider those my baseline to feel most comfortable in an editor. (And yes, if the price is reasonable, I'm willing to pay developers for their work.)&lt;/p&gt;
+&lt;p&gt;As a reference to my experience, I've used TextMate, TextWrangler, Sublime Text, Atom, Gvim, XEmacs, KWrite, and Kate. However, I'm finding that my &amp;quot;power combination&amp;quot; is Sublime Text and PyCharm.&lt;/p&gt;
+&lt;p&gt;Yes, PyCharm is an IDE more than an editor. However, much in the same way I use both vim and emacs for particular tasks, Sublime + PyCharm are my GUI corollaries.&lt;/p&gt;
+&lt;p&gt;I tried using Sublime Text for Python development, and while I found it very useful, PyCharm is purpose-built for that, and I just missed its features too much to switch 100%. Of course, I don't always do Python development, but when I do, I choose PyCharm.&lt;/p&gt;
+&lt;p&gt;Sublime's customizability, plugin install system, super fast load times, syntax highlighting for well-known file types and languages, and being cross-platform hit every checkbox I expect from an editor.&lt;/p&gt;
+&lt;p&gt;Sublime is closed source, and that's a big negative in my book, but I can't argue with its usability.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conclusion"&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;I will continue to keep my eye out for new editors, however for now, I'm rather content with vim, emacs, Sublime, and PyCharm.&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="editor"></category><category term="emacs"></category><category term="vim"></category><category term="sublime"></category><category term="sublimetext"></category><category term="pycharm"></category></entry></feed>

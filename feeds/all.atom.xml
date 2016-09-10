@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>tedops</title><link href="http://tedops.github.io/" rel="alternate"></link><link href="http://tedops.github.io/feeds/all.atom.xml" rel="self"></link><id>http://tedops.github.io/</id><updated>2016-08-11T00:00:00-07:00</updated><entry><title>The Search for the Perfect Editor</title><link href="http://tedops.github.io/editor-search.html" rel="alternate"></link><updated>2016-08-11T00:00:00-07:00</updated><author><name>Ted Sheibar</name></author><id>tag:tedops.github.io,2016-08-11:editor-search.html</id><summary type="html">&lt;p&gt;I've been listening to &lt;a class="reference external" href="https://talkpython.fm"&gt;a fantastic podcast&lt;/a&gt; lately and, as one of the final questions, the interviewer always asks his guests what is their editor of choice. I get the question on a somewhat regular basis as well, and since that podcast got me trying different editors from my usual go-tos, I thought I'd write down my reasons for my editor choices.&lt;/p&gt;
+&lt;p&gt;First, I should probably say that I prefer being a jack of all trades. Most people when hearing that think, &amp;quot;and master of none,&amp;quot; therefore I must be a dilettante, dabbler, or similar. However, here's the full phrase:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Jack of all trades, master of none, though ofttimes better than master of one
+&lt;/pre&gt;
+&lt;p&gt;With that in mind, here are the tools I use for development.&lt;/p&gt;
+&lt;div class="section" id="the-cli"&gt;
+&lt;h2&gt;The CLI&lt;/h2&gt;
+&lt;p&gt;By experience, I'm a &amp;quot;vim&amp;quot; guy. Vim is fast, available on almost every command line, not as hard to learn as people say, and makes you feel connected to a rich Linux tradition.&lt;/p&gt;
+&lt;p&gt;That being said, I don't use it very much these days.&lt;/p&gt;
+&lt;p&gt;As a vim user, I extolled its advantages, and eschewed &amp;quot;Evil Emacs&amp;quot; any chance I got. Of course, at that time, I didn't know how to use emacs, so it was very easy for me to be disparaging towards it.&lt;/p&gt;
+&lt;p&gt;But as I continued in my career, I met many people whom I like and respect who were emacs users. Working with them told me that there must be something to emacs, since they were clearly no dummies, and I couldn't believe that they'd use inferior stuff for their day-to-day livelihood.&lt;/p&gt;
+&lt;p&gt;So I learned emacs. At least, enough to confidently use it if, say, edit a file on someone's (an emacs user's) computer while helping troubleshoot something. What I didn't expect was just how often I would continue emacs after I felt I had a sufficient amount of basic skill.&lt;/p&gt;
+&lt;p&gt;To me, perhaps the nicest advantage emacs has is its translation to the Linux command line. All of the navigation, word replacement, deletion, and undo are exactly the same. It added to a very seamless feel when going into emacs, probably because my brain didn't have to switch to a different set of muscle memory.&lt;/p&gt;
+&lt;p&gt;Usually when I mention this, I get the vim crowd yelling, &amp;quot;Yeah, but you can set your shell to use vim-style navigation.&amp;quot; That is true, however, have you ever used that in practice? I have and found it absolutely cumbersome and downright annoying. Who wants a separate command mode on the command line? I have yet to meet a self-proclaimed vim user who actually uses &lt;cite&gt;set -o vi&lt;/cite&gt; in the shell.&lt;/p&gt;
+&lt;p&gt;By the same token, I find emacs to be too heavyweight if I want to quickly make modifications to a file, or peruse something with a finer grain of control than piping to &lt;cite&gt;less&lt;/cite&gt;. Vim is very useful for those occasions, particularly since I can expect it to be installed on any server to which I need to connect (at least I know &lt;cite&gt;vi&lt;/cite&gt; will be installed, if not vim).&lt;/p&gt;
+&lt;p&gt;All of this can be summed up as: for config file editing/quick perusing, I use vim. For any more serious development/script writing, I'll use emacs (&lt;cite&gt;yum install emacs-nox&lt;/cite&gt;).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="the-gui"&gt;
+&lt;h2&gt;The GUI&lt;/h2&gt;
+&lt;p&gt;It may be helpful first to lay out the rough criteria I use when choosing an editor. For starters, I've grown to be very comfortable on the command line and feel the most in control there in terms of editing and navigation. Using a GUI is something I gladly walked away from when I &amp;quot;went Linux&amp;quot; from Windows, however Mac has helped me once-again realize the benefits of clicking buttons and dragging things for productivity instead of straight-up typing.&lt;/p&gt;
+&lt;p&gt;What do I look for? Nothing esoteric, I assure you: I want a text editor that's:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;fast&lt;/li&gt;
+&lt;li&gt;cross-platform&lt;/li&gt;
+&lt;li&gt;easy word-wrapping&lt;/li&gt;
+&lt;li&gt;lightly customizable&lt;/li&gt;
+&lt;li&gt;syntax highlighting&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I think we can all agree that's not a huge or unreasonable data set. I'd consider those my baseline to feel most comfortable in an editor. (And yes, if the price is reasonable, I'm willing to pay developers for their work.)&lt;/p&gt;
+&lt;p&gt;As a reference to my experience, I've used TextMate, TextWrangler, Sublime Text, Atom, Gvim, XEmacs, KWrite, and Kate. However, I'm finding that my &amp;quot;power combination&amp;quot; is Sublime Text and PyCharm.&lt;/p&gt;
+&lt;p&gt;Yes, PyCharm is an IDE more than an editor. However, much in the same way I use both vim and emacs for particular tasks, Sublime + PyCharm are my GUI corollaries.&lt;/p&gt;
+&lt;p&gt;I tried using Sublime Text for Python development, and while I found it very useful, PyCharm is purpose-built for that, and I just missed its features too much to switch 100%. Of course, I don't always do Python development, but when I do, I choose PyCharm.&lt;/p&gt;
+&lt;p&gt;Sublime's customizability, plugin install system, super fast load times, syntax highlighting for well-known file types and languages, and being cross-platform hit every checkbox I expect from an editor.&lt;/p&gt;
+&lt;p&gt;Sublime is closed source, and that's a big negative in my book, but I can't argue with its usability.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conclusion"&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;I will continue to keep my eye out for new editors, however for now, I'm rather content with vim, emacs, Sublime, and PyCharm.&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="editor"></category><category term="emacs"></category><category term="vim"></category><category term="sublime"></category><category term="sublimetext"></category><category term="pycharm"></category></entry><entry><title>Open Source Contributions</title><link href="http://tedops.github.io/open-source-contributions.html" rel="alternate"></link><updated>2016-04-11T00:00:00-07:00</updated><author><name>Ted Sheibar</name></author><id>tag:tedops.github.io,2016-04-11:open-source-contributions.html</id><summary type="html">&lt;p&gt;Putting this here in part to show my involvement, and in part to motivate me to contribute more.&lt;/p&gt;
+&lt;div class="section" id="owner"&gt;
+&lt;h2&gt;Owner&lt;/h2&gt;
+&lt;table border="1" class="docutils"&gt;
+&lt;colgroup&gt;
+&lt;col width="50%" /&gt;
+&lt;col width="50%" /&gt;
+&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td&gt;&lt;a class="reference external" href="https://pypi.python.org/pypi/Party"&gt;Party&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Lightweight Python API client for Artifactory&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div class="section" id="contributor"&gt;
+&lt;h2&gt;Contributor&lt;/h2&gt;
+&lt;table border="1" class="docutils"&gt;
+&lt;colgroup&gt;
+&lt;col width="9%" /&gt;
+&lt;col width="91%" /&gt;
+&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td&gt;SaltStack&lt;/td&gt;
+&lt;td&gt;&lt;a class="reference external" href="https://github.com/saltstack/salt/pull/6452"&gt;https://github.com/saltstack/salt/pull/6452&lt;/a&gt;
+&lt;a class="reference external" href="https://github.com/saltstack/salt/pull/6429"&gt;https://github.com/saltstack/salt/pull/6429&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;div class="section" id="gocd"&gt;
+&lt;h3&gt;GoCD&lt;/h3&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</summary><category term="open"></category><category term="source"></category><category term="contributions"></category><category term="foss"></category></entry><entry><title>How To Find the Default Active Ethernet Interface in a Salt State</title><link href="http://tedops.github.io/how-to-find-default-active-ethernet-interface.html" rel="alternate"></link><updated>2016-02-04T00:00:00-08:00</updated><author><name>Ted Sheibar</name></author><id>tag:tedops.github.io,2016-02-04:how-to-find-default-active-ethernet-interface.html</id><summary type="html">&lt;p&gt;Recently, I was working with my friend &lt;a class="reference external" href="http://bobbylikeslinux.net/"&gt;Bobby&lt;/a&gt;, and we needed a way to find out the default ethernet interface on a host. We were trying to dynamically configure an iptables rule (forwarding port 80 requests to 8153) to use the host's active port when applying a &lt;a class="reference external" href="https://docs.saltstack.com/en/latest/topics/tutorials/starting_states.html"&gt;Salt state&lt;/a&gt;. We also wanted to avoid using &lt;a class="reference external" href="https://www.nginx.com/"&gt;nginx&lt;/a&gt; as a hammer to fix Yet Another Routing Problem.&lt;/p&gt;
+&lt;p&gt;Here's what we came up with:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+&lt;span class="o"&gt;{{&lt;/span&gt; salt&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'network.default_route'&lt;/span&gt;&lt;span class="o"&gt;](&lt;/span&gt;&lt;span class="s1"&gt;'inet'&lt;/span&gt;&lt;span class="o"&gt;)[&lt;/span&gt;0&lt;span class="o"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;'interface'&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;}}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;We saw this work in a Salt state by creating a dummy cmd.run block:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+iface-file:
+  cmd.run:
+    - name: &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="o"&gt;{{&lt;/span&gt; salt&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'network.default_route'&lt;/span&gt;&lt;span class="o"&gt;](&lt;/span&gt;&lt;span class="s1"&gt;'inet'&lt;/span&gt;&lt;span class="o"&gt;)[&lt;/span&gt;0&lt;span class="o"&gt;][&lt;/span&gt;&lt;span class="s1"&gt;'interface'&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;}}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Which had a nice output of:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+----------
+          ID: iface-file
+    Function: cmd.run
+        Name: &lt;span class="nb"&gt;echo&lt;/span&gt; eth0
+      Result: True
+     Comment: Command &lt;span class="s2"&gt;&amp;quot;echo eth0&amp;quot;&lt;/span&gt; run
+     Started: 06:00:17.170601
+    Duration: 8.831 ms
+     Changes:
+              ----------
+              pid:
+                  4255
+              retcode:
+                  0
+              stderr:
+              stdout:
+                  eth0
+&lt;/pre&gt;
+&lt;p&gt;This can also be run on the command line, though we couldn't find a way to just get the token without resorting to grep|sed|cut:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+$ salt-call --local network.default_route inet
+
+local:
+    &lt;span class="p"&gt;|&lt;/span&gt;_
+      ----------
+      addr_family:
+          inet
+      destination:
+          0.0.0.0
+      flags:
+          UG
+      gateway:
+          10.0.2.2
+      interface:
+          eth0
+      netmask:
+          0.0.0.0
+&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; The &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--local&lt;/span&gt;&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;inet&lt;/tt&gt; parameters are optional. The &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--local&lt;/span&gt;&lt;/tt&gt; prevents from looking at master, and &lt;a class="reference external" href="https://github.com/saltstack/salt/blob/develop/salt/modules/network.py#L1289"&gt;according to Github&lt;/a&gt;, the only valid values are &lt;tt class="docutils literal"&gt;inet&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;inet6&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;This method was preferable to us rather than looping through &lt;tt class="docutils literal"&gt;ip4_interfaces&lt;/tt&gt; with &lt;tt class="docutils literal"&gt;grains.get&lt;/tt&gt;, because doing so would ignore the server's existing configuration (as set through iptables).&lt;/p&gt;
+</summary><category term="how-to"></category><category term="salt"></category><category term="active"></category><category term="default"></category><category term="interface"></category><category term="ethernet"></category><category term="ifconfig"></category><category term="eth0"></category></entry><entry><title>Setting Up Collectd to Use RRD</title><link href="http://tedops.github.io/setting-up-collectd-to-use-rrd.html" rel="alternate"></link><updated>2015-11-22T00:00:00-08:00</updated><author><name>Ted Sheibar</name></author><id>tag:tedops.github.io,2016-01-22:setting-up-collectd-to-use-rrd.html</id><summary type="html">&lt;p&gt;There are a lot of blog posts out there about collectd can be &lt;em&gt;enabled&lt;/em&gt; to output to RRD files, but nothing I found spelled out the actual steps.&lt;/p&gt;
+&lt;p&gt;I recommend reading all the docs you can find on both rrd and collectd, but to help spare your (and my) motivation, here are steps I followed to set it all up.&lt;/p&gt;
+&lt;div class="section" id="step-1-install"&gt;
+&lt;h2&gt;Step 1: Install&lt;/h2&gt;
+&lt;p&gt;This is pretty straightforward:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+# yum install collectd rrdtool rrdtool-perl collectd-rrdtool
+&lt;/pre&gt;
+&lt;p&gt;What took me forever was figuring out that I needed &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;collectd-rrdtool&lt;/span&gt;&lt;/tt&gt;. This package solely installs the file &lt;tt class="docutils literal"&gt;/usr/lib64/collectd/rrdtool.so&lt;/tt&gt;, which allows collectd to use RRDs as write targets.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="step-2-configure"&gt;
+&lt;h2&gt;Step 2: Configure&lt;/h2&gt;
+&lt;p&gt;This is also pretty straightforward, except for collectd's slightly awkward commenting pattern in its &lt;tt class="docutils literal"&gt;/etc/collectd.conf&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;Basically, one hash (&amp;quot;#&amp;quot;) means you have that library (shared object) installed, but disabled. Two hashes (&amp;quot;##&amp;quot;) means the library is not installed, nor enabled.&lt;/p&gt;
+&lt;p&gt;First, backup the original:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+# cp /etc/collectd.conf /etc/collectd.conf.orig
+&lt;/pre&gt;
+&lt;p&gt;Then, in &lt;tt class="docutils literal"&gt;/etc/collectd.conf&lt;/tt&gt;, uncomment the line:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+LoadPlugin rrdtool
+&lt;/pre&gt;
+&lt;p&gt;Next, uncomment and configure the plugin (should be commented out in the same file). Change the values to whatever you like:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;lt;Plugin rrdtool&amp;gt;
+        DataDir &amp;quot;/var/lib/collectd/rrd&amp;quot;
+        CreateFilesAsync false
+        CacheTimeout 120
+        CacheFlush   30
+        WritesPerSecond 50
+&amp;lt;/Plugin&amp;gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="step-3-test"&gt;
+&lt;h2&gt;Step 3: Test&lt;/h2&gt;
+&lt;p&gt;Collectd has a couple of handy flags to test your config. From the CLI help:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+-t              Test config and exit.
+-T              Test plugin read and exit.
+&lt;/pre&gt;
+&lt;p&gt;So, I like to run both separately to make sure everything is well-formed:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+# collectd -t ; echo $?
+0
+# collectd -T ; echo $?
+0
+&lt;/pre&gt;
+&lt;p&gt;If you don't see zeroes as return codes, go back and verify nothing is obviously wrong (fat-fingered something). You can always restore from &lt;tt class="docutils literal"&gt;/etc/collectd.conf.orig&lt;/tt&gt; you made in Step 2.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="step-4-profit"&gt;
+&lt;h2&gt;Step 4: Profit&lt;/h2&gt;
+&lt;p&gt;Now you can just run collectd:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+# collectd
+&lt;/pre&gt;
+&lt;p&gt;For the paranoid crew among us (read: SREs/ops folks), you can check to ensure the process is running:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+# ps aux | grep [c]ollectd
+root     22855  0.2  0.0 899636  3768 ?        Ssl  Jan19  11:01 collectd
+&lt;/pre&gt;
+&lt;p&gt;You can also poke around the directory you defined in the plugin block to see the RRD files themselves.&lt;/p&gt;
+&lt;p&gt;That's it!&lt;/p&gt;
+&lt;p&gt;Next step will be to hook up graphite to these rrd files and see what's happening with the system. That'll hopefully be in another blog post.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="quick-troubleshooting"&gt;
+&lt;h2&gt;Quick Troubleshooting&lt;/h2&gt;
+&lt;blockquote&gt;
+&amp;quot;I don't see RRD files being generated.&amp;quot;&lt;/blockquote&gt;
+&lt;p&gt;Make sure you have collectd-rrdtool installed. Check for the existence of the file &lt;tt class="docutils literal"&gt;/usr/lib64/collectd/rrdtool.so&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;If that file doesn't exist, use your system's package manager to determine what provides that file.&lt;/p&gt;
+&lt;blockquote&gt;
+&amp;quot;The system log says 'Available write targets: [none]'&amp;quot;&lt;/blockquote&gt;
+&lt;p&gt;Collectd is saying it can't write out to the system. Fix this either by enabling the rrdtool plugin (as outlined in this post), or one of the &lt;tt class="docutils literal"&gt;write_*&lt;/tt&gt; plugins.&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="collectd"></category><category term="rrd"></category><category term="rrdtool"></category><category term="centos"></category></entry><entry><title>Adding SSL Certificate to Java Keystore</title><link href="http://tedops.github.io/add-ssl-to-java.html" rel="alternate"></link><updated>2015-11-23T00:00:00-08:00</updated><author><name>Ted Sheibar</name></author><id>tag:tedops.github.io,2015-11-23:add-ssl-to-java.html</id><summary type="html">&lt;p&gt;This is something that crops up from time to time and is annoying to go Stack Overflow mining each time I need it. So I'm putting it here for my sake, and hope it helps you too:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+&lt;span class="nv"&gt;SITE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;github.com&amp;quot;&lt;/span&gt;
+&lt;span class="c1"&gt;# get github cert from the server
+&lt;/span&gt;openssl x509 -in &amp;lt;&lt;span class="o"&gt;(&lt;/span&gt;openssl s_client -connect $SITE:443 -prexit 2&amp;gt;/dev/null&lt;span class="o"&gt;)&lt;/span&gt; -out ~/$SITE.crt
+&lt;span class="c1"&gt;# add it to the java keystore (yes, the storepass is literally 'changeit')
+&lt;/span&gt;/usr/java/default/bin/keytool -noprompt -importcert -file ~/$SITE.crt &lt;span class="se"&gt;\
+&lt;/span&gt;    -alias github -keystore /usr/java/default/jre/lib/security/cacerts -storepass changeit
+&lt;span class="c1"&gt;# clean up
+&lt;/span&gt;rm ~/$SITE.crt
+&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; Remove the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-noprompt&lt;/span&gt;&lt;/tt&gt; flag if you'd prefer to see the cert before accepting it.&lt;/p&gt;
+</summary><category term="bash"></category><category term="java"></category><category term="ssl"></category><category term="cert"></category><category term="keystore"></category></entry><entry><title>Editing The GoCD H2 DB Engine with H2 Shell</title><link href="http://tedops.github.io/edit-gocd-h2db.html" rel="alternate"></link><updated>2015-11-18T00:00:00-08:00</updated><author><name>Ted Sheibar</name></author><id>tag:tedops.github.io,2015-11-18:edit-gocd-h2db.html</id><summary type="html">&lt;p&gt;After encountering a few anomalies using Go by Thoughtworks (&amp;quot;GoCD&amp;quot;), I wanted to take a look at the DB under the hood.&lt;/p&gt;
+&lt;p&gt;Unfortunately, Thoughtworks wants you to pay at least $15,000 for their PostgreSQL ORM (with a 250 pipeline limit). So instead, understanding the included H2 database engine seemed more attractive. Call me crazy.&lt;/p&gt;
+&lt;div class="section" id="step-1-get-the-right-tools"&gt;
+&lt;h2&gt;Step 1: Get the Right Tools&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://java.com/en/download/help/download_options.xml"&gt;Install Java&lt;/a&gt; (at least 1.7).&lt;/li&gt;
+&lt;li&gt;Get a copy of the &lt;tt class="docutils literal"&gt;$SERVER_WORK_DIR/db/h2db/cruise.h2.db&lt;/tt&gt; file.&lt;ul&gt;
+&lt;li&gt;Alternatively, shut down your GoCD instance and navigate to &lt;tt class="docutils literal"&gt;$SERVER_WORK_DIR/db/h2db&lt;/tt&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Get a copy of &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;h2*.jar&lt;/span&gt;&lt;/tt&gt;, available at &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;$SERVER_WORK_DIR/work/jetty-0.0.0.0-8153-cruise.war-_go-any-/webapp/WEB-INF/lib&lt;/span&gt;&lt;/tt&gt;. This jar contains the actual tool we're going to invoke.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="step-2-run-them"&gt;
+&lt;h2&gt;Step 2: Run Them&lt;/h2&gt;
+&lt;p&gt;Navigate to the directory containing the h2*.jar and run the following:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+java -cp h2*.jar org.h2.tools.Shell
+&lt;/pre&gt;
+&lt;p&gt;This will start the H2 Shell, which will prompt you about connection information:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Welcome to H2 Shell 1.3.168 (2012-07-13)
+Exit with Ctrl+C
+[Enter]   jdbc:h2:~/test
+URL
+&lt;/pre&gt;
+&lt;p&gt;Specify the full path to the cruise.h2.db file, but &lt;strong&gt;leave off the .h2.db extension.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;If you are using the installed, stopped instance of GoCD and are using the default $SERVER_WORK_DIR directory, then this is what you would type in for the URL:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+URL       jdbc:h2:/var/lib/go-server/db/h2db/cruise
+&lt;/pre&gt;
+&lt;p&gt;Accept the driver (&lt;tt class="docutils literal"&gt;org.h2.Driver&lt;/tt&gt;) and username (&lt;tt class="docutils literal"&gt;sa&lt;/tt&gt;) defaults, and leave the password blank (you will need to hit Enter twice):&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+[Enter]   org.h2.Driver
+Driver
+[Enter]   sa
+User
+[Enter]   Hide
+Password
+Password
+&lt;/pre&gt;
+&lt;p&gt;If all goes well, you should see output similar to the following:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Connected
+Commands are case insensitive; SQL statements end with ';'
+help or ?      Display this help
+list           Toggle result list / stack trace mode
+maxwidth       Set maximum column width (default is 100)
+autocommit     Enable or disable autocommit
+history        Show the last 20 statements
+quit or exit   Close the connection and exit
+sql&amp;gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="step-3-profit"&gt;
+&lt;h2&gt;Step 3: Profit&lt;/h2&gt;
+&lt;p&gt;You are now free to view and update the H2 database:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sql&amp;gt; show tables;
+TABLE_NAME                     | TABLE_SCHEMA
+AGENTS                         | PUBLIC
+ARTIFACTPLANS                  | PUBLIC
+ARTIFACTPROPERTIESGENERATOR    | PUBLIC
+BUILDCAUSEBUFFER               | PUBLIC
+BUILDS                         | PUBLIC
+BUILDSTATETRANSITIONS          | PUBLIC
+CHANGELOG                      | PUBLIC
+ENVIRONMENTVARIABLES           | PUBLIC
+GADGETOAUTHACCESSTOKENS        | PUBLIC
+GADGETOAUTHAUTHORIZATIONCODES  | PUBLIC
+GADGETOAUTHCLIENTS             | PUBLIC
+MATERIALS                      | PUBLIC
+MODIFICATIONS                  | PUBLIC
+MODIFIEDFILES                  | PUBLIC
+NOTIFICATIONFILTERS            | PUBLIC
+OAUTHAUTHORIZATIONS            | PUBLIC
+OAUTHCLIENTS                   | PUBLIC
+OAUTHTOKENS                    | PUBLIC
+PIPELINELABELCOUNTS            | PUBLIC
+PIPELINEMATERIALREVISIONS      | PUBLIC
+PIPELINES                      | PUBLIC
+PIPELINESELECTIONS             | PUBLIC
+PLUGINS                        | PUBLIC
+PREFFERED                      | PUBLIC
+PROPERTIES                     | PUBLIC
+RESOURCES                      | PUBLIC
+SERVERBACKUPS                  | PUBLIC
+STAGEARTIFACTCLEANUPPROHIBITED | PUBLIC
+STAGES                         | PUBLIC
+USERS                          | PUBLIC
+_BUILDS                        | PUBLIC
+_STAGES                        | PUBLIC
+(32 rows, 11 ms)
+&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;DISCLAIMER&lt;/strong&gt;: I recommend NOT doing any of this unless you take a backup of &lt;tt class="docutils literal"&gt;cruise.h2.db&lt;/tt&gt; first.&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="go"></category><category term="thoughtworks"></category><category term="gocd"></category><category term="ci"></category><category term="h2db"></category><category term="java"></category></entry><entry><title>Bash Builtin Override Trick</title><link href="http://tedops.github.io/bash-builtin-trick.html" rel="alternate"></link><updated>2015-11-06T00:00:00-08:00</updated><author><name>Ted Sheibar</name></author><id>tag:tedops.github.io,2015-11-06:bash-builtin-trick.html</id><summary type="html">&lt;p&gt;Over the years, I have found this trick useful for various things and wanted to share them.&lt;/p&gt;
+&lt;p&gt;I just used this again today to help with some error checking (probably because I've been on a &lt;a class="reference external" href="http://chimera.labs.oreilly.com/books/1234000000754/index.html"&gt;Python + TDD&lt;/a&gt; kick lately...), and it allowed me to debug &amp;amp; fix an issue rather quickly.&lt;/p&gt;
+&lt;div class="section" id="what-is-a-bash-builtin"&gt;
+&lt;h2&gt;What is a Bash Builtin?&lt;/h2&gt;
+&lt;p&gt;According to &lt;a class="reference external" href="http://www.tldp.org/LDP/abs/html/internal.html"&gt;tldp.org&lt;/a&gt;, bash builtins are:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+A builtin is a command contained within the Bash tool set, literally built in.
+This is either for performance reasons -- builtins execute faster than external
+commands, which usually require forking off [1] a separate process -- or
+because a particular builtin needs direct access to the shell internals.
+&lt;/pre&gt;
+&lt;p&gt;You likely use them everyday without even realizing they are builtins - like &lt;tt class="docutils literal"&gt;echo&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;test&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;source&lt;/tt&gt;, and &lt;tt class="docutils literal"&gt;unset&lt;/tt&gt;. What's not as well-known is that these can be overridden.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="testing-the-return-value"&gt;
+&lt;h2&gt;Testing The Return Value&lt;/h2&gt;
+&lt;p&gt;While building a chroot jail, I had 3 separate sections where yum was installing particular packages that I had labelled &lt;tt class="docutils literal"&gt;prep&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;setup&lt;/tt&gt;, and &lt;tt class="docutils literal"&gt;main&lt;/tt&gt; accordingly. The problem was that packages in the &lt;tt class="docutils literal"&gt;main&lt;/tt&gt; section were failing to install because of dependency resolution errors.&lt;/p&gt;
+&lt;p&gt;Typical problem, but nothing looked out of the ordinary to me in the output.&lt;/p&gt;
+&lt;p&gt;So, here's what I ended up doing:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+&lt;span class="ch"&gt;#!/bin/bash
+&lt;/span&gt;
+test&lt;span class="o"&gt;()&lt;/span&gt;
+&lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="nb"&gt;builtin&lt;/span&gt; &lt;span class="nb"&gt;test&lt;/span&gt; &lt;span class="nv"&gt;$1&lt;/span&gt; -eq &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;[ERROR] &lt;/span&gt;&lt;span class="nv"&gt;$2&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+        &lt;span class="nb"&gt;exit&lt;/span&gt; &lt;span class="nv"&gt;$2&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="c1"&gt;# PREP
+&lt;/span&gt;yum -y install centos rpm-python
+&lt;span class="nb"&gt;test&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$?&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Yum installation error (PREP). See above.&amp;quot;&lt;/span&gt;
+
+&lt;span class="c1"&gt;# SETUP
+&lt;/span&gt;yum -y install rpm-build
+&lt;span class="nb"&gt;test&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$?&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Yum installation error (SETUP). See above.&amp;quot;&lt;/span&gt;
+
+&lt;span class="c1"&gt;# MAIN
+&lt;/span&gt;yum -y install my-cool-package
+&lt;span class="nb"&gt;test&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$?&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Yum installation error (MAIN). See above.&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Overriding the &lt;tt class="docutils literal"&gt;test&lt;/tt&gt; builtin allowed me to abide by the DRY principle by having a single method to test return values. &lt;strong&gt;Notice&lt;/strong&gt; that the overriding is achieved by using the &lt;tt class="docutils literal"&gt;builtin&lt;/tt&gt; reserved keyword to execute the builtin version of the command you want to use.&lt;/p&gt;
+&lt;p&gt;After I ran this, it turned out that two packages - one in PREP and the other in SETUP - were unsigned, which was causing the failure. Without these checks in place, it would have taken a very long time for me to comb through the 100s of dependencies coupled with the packages we were trying to install.&lt;/p&gt;
+&lt;p&gt;Using comments to label sections, and then adding that label to the error message, really helped me quickly narrow down where the real problem was...which was NOT depsolving problems with my-cool-package as I originally thought.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="echo-logging"&gt;
+&lt;h2&gt;Echo &amp;amp; Logging&lt;/h2&gt;
+&lt;p&gt;Another useful trick is overriding the &lt;tt class="docutils literal"&gt;echo&lt;/tt&gt; command. Here's what I generally use for logging output with bash scripts:&lt;/p&gt;
+&lt;pre class="code Bash literal-block"&gt;
+&lt;span class="ch"&gt;#!/bin/bash
+&lt;/span&gt;
+echo&lt;span class="o"&gt;()&lt;/span&gt;
+&lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="nb"&gt;builtin&lt;/span&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;[&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;date &lt;span class="s1"&gt;'+%Y-%m-%d %H:%M:%S'&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;] &lt;/span&gt;&lt;span class="nv"&gt;$*&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Installing packages...&amp;quot;&lt;/span&gt;
+yum -y install my-cool-package rpm-build
+&lt;/pre&gt;
+&lt;p&gt;This prints a timestamp for every call to &lt;tt class="docutils literal"&gt;echo&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;This trick can likely be extended many ways, but I've found these two use cases to be the most applicable and useful for everyday script writing, debugging, and running.&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="bash"></category><category term="builtin"></category><category term="test"></category><category term="echo"></category></entry><entry><title>Git Fast-Forward Merges</title><link href="http://tedops.github.io/git-ff-merge.html" rel="alternate"></link><updated>2015-11-05T00:30:00-08:00</updated><author><name>Ted Sheibar</name></author><id>tag:tedops.github.io,2015-11-05:git-ff-merge.html</id><summary type="html">&lt;div class="section" id="the-scenario"&gt;
+&lt;h2&gt;The Scenario&lt;/h2&gt;
+&lt;p&gt;You've developed and released a tool that people have downloaded and found useful. So useful, in fact, that they have begun contributing to your project.&lt;/p&gt;
+&lt;p&gt;After weeks of making no commits, you get your first pull request (PR) and see that it looks great. Time to integrate it into your project. What now?&lt;/p&gt;
+&lt;p&gt;Since there have been no commits on &lt;tt class="docutils literal"&gt;master&lt;/tt&gt; since the contributor forked your project, the work to merge in the PR is trivial. Or is it?&lt;/p&gt;
+&lt;p&gt;Whether you realize it or not, the choice you make now can affect your Git history. What is the choice? To fast-foward or not fast-forward merge.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="fast-forward-merge"&gt;
+&lt;h2&gt;Fast-Forward Merge&lt;/h2&gt;
+&lt;p&gt;Because there have been no commits on &lt;tt class="docutils literal"&gt;master&lt;/tt&gt; since the PR was submitted, the &lt;tt class="docutils literal"&gt;HEAD&lt;/tt&gt; pointer on &lt;tt class="docutils literal"&gt;master&lt;/tt&gt; can be &amp;quot;fast-forwarded&amp;quot; to point to the final commit on the PR. Looking at the log of &lt;tt class="docutils literal"&gt;master&lt;/tt&gt; then will show a linear history as a series of uninterrupted commits.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="non-fast-forward-merge-no-ff"&gt;
+&lt;h2&gt;Non-Fast-Forward Merge (&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--no-ff&lt;/span&gt;&lt;/tt&gt;)&lt;/h2&gt;
+&lt;p&gt;In contrast, using the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--no-ff&lt;/span&gt;&lt;/tt&gt; flag when merging adds a merge commit when done, preserving a more &amp;quot;true&amp;quot; lineage (referred to as &lt;strong&gt;explicit branches&lt;/strong&gt;). Looking at the log of &lt;tt class="docutils literal"&gt;master&lt;/tt&gt; will then show that a branch was merged into it. Plus, you get the added bonus of being able to revert cleanly just by reverting the merge commit.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="which-is-better"&gt;
+&lt;h2&gt;Which is Better?&lt;/h2&gt;
+&lt;p&gt;Some tools, like Github, force &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--no-ff&lt;/span&gt;&lt;/tt&gt; when committing pull requests, because they prefer to preserve explicit branches. This does makes sense, as the merge commit that's created after merging makes it very obvious from which pull request the commit came from.&lt;/p&gt;
+&lt;p&gt;However, doing that moves away from a linear history, which makes doing any &amp;quot;archaeology&amp;quot; slightly more difficult (e.g. &lt;tt class="docutils literal"&gt;log&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;bisect&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;blame&lt;/tt&gt;, etc). While fast-forwarding does make it more difficult to find the source of a merged branch, it's not as much of an issue if development teams continue to keep detailed commit messages, including ticket references and PR URLs.&lt;/p&gt;
+&lt;p&gt;The debate about which one is better usually centers on whether or not to keep as &amp;quot;clean&amp;quot; of a history as possible. I personally prefer fast-forward merging &amp;amp; cleaner history in my local fork, because being able to more easily debug a historical source control problem is more valuable to me than knowing which person conducted a merge. (If needed, &lt;tt class="docutils literal"&gt;git blame&lt;/tt&gt; would provide all of the details necessary to track down the person who could likely help fix an issue/revert commits.)&lt;/p&gt;
+&lt;p&gt;However, in an enterprise context, I prefer having &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--no-ff&lt;/span&gt;&lt;/tt&gt; server-side, as it's advantageous to have more clarity from where/when certain branches - and their correlating PRs - came from.&lt;/p&gt;
+&lt;p&gt;What do you think?&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="git"></category><category term="merge"></category><category term="enterprise"></category></entry></feed>

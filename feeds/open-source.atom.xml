@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>tedops</title><link href="http://tedops.github.io/" rel="alternate"></link><link href="http://tedops.github.io/feeds/open-source.atom.xml" rel="self"></link><id>http://tedops.github.io/</id><updated>2016-04-11T00:00:00-07:00</updated><entry><title>Open Source Contributions</title><link href="http://tedops.github.io/open-source-contributions.html" rel="alternate"></link><updated>2016-04-11T00:00:00-07:00</updated><author><name>Ted Sheibar</name></author><id>tag:tedops.github.io,2016-04-11:open-source-contributions.html</id><summary type="html">&lt;p&gt;Putting this here in part to show my involvement, and in part to motivate me to contribute more.&lt;/p&gt;
+&lt;div class="section" id="owner"&gt;
+&lt;h2&gt;Owner&lt;/h2&gt;
+&lt;table border="1" class="docutils"&gt;
+&lt;colgroup&gt;
+&lt;col width="50%" /&gt;
+&lt;col width="50%" /&gt;
+&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td&gt;&lt;a class="reference external" href="https://pypi.python.org/pypi/Party"&gt;Party&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Lightweight Python API client for Artifactory&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div class="section" id="contributor"&gt;
+&lt;h2&gt;Contributor&lt;/h2&gt;
+&lt;table border="1" class="docutils"&gt;
+&lt;colgroup&gt;
+&lt;col width="9%" /&gt;
+&lt;col width="91%" /&gt;
+&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td&gt;SaltStack&lt;/td&gt;
+&lt;td&gt;&lt;a class="reference external" href="https://github.com/saltstack/salt/pull/6452"&gt;https://github.com/saltstack/salt/pull/6452&lt;/a&gt;
+&lt;a class="reference external" href="https://github.com/saltstack/salt/pull/6429"&gt;https://github.com/saltstack/salt/pull/6429&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;div class="section" id="gocd"&gt;
+&lt;h3&gt;GoCD&lt;/h3&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</summary><category term="open"></category><category term="source"></category><category term="contributions"></category><category term="foss"></category></entry></feed>

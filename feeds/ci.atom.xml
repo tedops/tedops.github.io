@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>tedops</title><link href="http://tedops.github.io/" rel="alternate"></link><link href="http://tedops.github.io/feeds/ci.atom.xml" rel="self"></link><id>http://tedops.github.io/</id><updated>2015-11-18T00:00:00-08:00</updated><entry><title>Editing The GoCD H2 DB Engine with H2 Shell</title><link href="http://tedops.github.io/edit-gocd-h2db.html" rel="alternate"></link><updated>2015-11-18T00:00:00-08:00</updated><author><name>Ted Sheibar</name></author><id>tag:tedops.github.io,2015-11-18:edit-gocd-h2db.html</id><summary type="html">&lt;p&gt;After encountering a few anomalies using Go by Thoughtworks (&amp;quot;GoCD&amp;quot;), I wanted to take a look at the DB under the hood.&lt;/p&gt;
+&lt;p&gt;Unfortunately, Thoughtworks wants you to pay at least $15,000 for their PostgreSQL ORM (with a 250 pipeline limit). So instead, understanding the included H2 database engine seemed more attractive. Call me crazy.&lt;/p&gt;
+&lt;div class="section" id="step-1-get-the-right-tools"&gt;
+&lt;h2&gt;Step 1: Get the Right Tools&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://java.com/en/download/help/download_options.xml"&gt;Install Java&lt;/a&gt; (at least 1.7).&lt;/li&gt;
+&lt;li&gt;Get a copy of the &lt;tt class="docutils literal"&gt;$SERVER_WORK_DIR/db/h2db/cruise.h2.db&lt;/tt&gt; file.&lt;ul&gt;
+&lt;li&gt;Alternatively, shut down your GoCD instance and navigate to &lt;tt class="docutils literal"&gt;$SERVER_WORK_DIR/db/h2db&lt;/tt&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Get a copy of &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;h2*.jar&lt;/span&gt;&lt;/tt&gt;, available at &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;$SERVER_WORK_DIR/work/jetty-0.0.0.0-8153-cruise.war-_go-any-/webapp/WEB-INF/lib&lt;/span&gt;&lt;/tt&gt;. This jar contains the actual tool we're going to invoke.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="step-2-run-them"&gt;
+&lt;h2&gt;Step 2: Run Them&lt;/h2&gt;
+&lt;p&gt;Navigate to the directory containing the h2*.jar and run the following:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+java -cp h2*.jar org.h2.tools.Shell
+&lt;/pre&gt;
+&lt;p&gt;This will start the H2 Shell, which will prompt you about connection information:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Welcome to H2 Shell 1.3.168 (2012-07-13)
+Exit with Ctrl+C
+[Enter]   jdbc:h2:~/test
+URL
+&lt;/pre&gt;
+&lt;p&gt;Specify the full path to the cruise.h2.db file, but &lt;strong&gt;leave off the .h2.db extension.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;If you are using the installed, stopped instance of GoCD and are using the default $SERVER_WORK_DIR directory, then this is what you would type in for the URL:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+URL       jdbc:h2:/var/lib/go-server/db/h2db/cruise
+&lt;/pre&gt;
+&lt;p&gt;Accept the driver (&lt;tt class="docutils literal"&gt;org.h2.Driver&lt;/tt&gt;) and username (&lt;tt class="docutils literal"&gt;sa&lt;/tt&gt;) defaults, and leave the password blank (you will need to hit Enter twice):&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+[Enter]   org.h2.Driver
+Driver
+[Enter]   sa
+User
+[Enter]   Hide
+Password
+Password
+&lt;/pre&gt;
+&lt;p&gt;If all goes well, you should see output similar to the following:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Connected
+Commands are case insensitive; SQL statements end with ';'
+help or ?      Display this help
+list           Toggle result list / stack trace mode
+maxwidth       Set maximum column width (default is 100)
+autocommit     Enable or disable autocommit
+history        Show the last 20 statements
+quit or exit   Close the connection and exit
+sql&amp;gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="step-3-profit"&gt;
+&lt;h2&gt;Step 3: Profit&lt;/h2&gt;
+&lt;p&gt;You are now free to view and update the H2 database:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+sql&amp;gt; show tables;
+TABLE_NAME                     | TABLE_SCHEMA
+AGENTS                         | PUBLIC
+ARTIFACTPLANS                  | PUBLIC
+ARTIFACTPROPERTIESGENERATOR    | PUBLIC
+BUILDCAUSEBUFFER               | PUBLIC
+BUILDS                         | PUBLIC
+BUILDSTATETRANSITIONS          | PUBLIC
+CHANGELOG                      | PUBLIC
+ENVIRONMENTVARIABLES           | PUBLIC
+GADGETOAUTHACCESSTOKENS        | PUBLIC
+GADGETOAUTHAUTHORIZATIONCODES  | PUBLIC
+GADGETOAUTHCLIENTS             | PUBLIC
+MATERIALS                      | PUBLIC
+MODIFICATIONS                  | PUBLIC
+MODIFIEDFILES                  | PUBLIC
+NOTIFICATIONFILTERS            | PUBLIC
+OAUTHAUTHORIZATIONS            | PUBLIC
+OAUTHCLIENTS                   | PUBLIC
+OAUTHTOKENS                    | PUBLIC
+PIPELINELABELCOUNTS            | PUBLIC
+PIPELINEMATERIALREVISIONS      | PUBLIC
+PIPELINES                      | PUBLIC
+PIPELINESELECTIONS             | PUBLIC
+PLUGINS                        | PUBLIC
+PREFFERED                      | PUBLIC
+PROPERTIES                     | PUBLIC
+RESOURCES                      | PUBLIC
+SERVERBACKUPS                  | PUBLIC
+STAGEARTIFACTCLEANUPPROHIBITED | PUBLIC
+STAGES                         | PUBLIC
+USERS                          | PUBLIC
+_BUILDS                        | PUBLIC
+_STAGES                        | PUBLIC
+(32 rows, 11 ms)
+&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;DISCLAIMER&lt;/strong&gt;: I recommend NOT doing any of this unless you take a backup of &lt;tt class="docutils literal"&gt;cruise.h2.db&lt;/tt&gt; first.&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="go"></category><category term="thoughtworks"></category><category term="gocd"></category><category term="ci"></category><category term="h2db"></category><category term="java"></category></entry></feed>

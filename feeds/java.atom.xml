@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>tedops</title><link href="http://tedops.github.io/" rel="alternate"></link><link href="http://tedops.github.io/feeds/java.atom.xml" rel="self"></link><id>http://tedops.github.io/</id><updated>2015-11-23T00:00:00-08:00</updated><entry><title>Adding SSL Certificate to Java Keystore</title><link href="http://tedops.github.io/add-ssl-to-java.html" rel="alternate"></link><updated>2015-11-23T00:00:00-08:00</updated><author><name>Ted Sheibar</name></author><id>tag:tedops.github.io,2015-11-23:add-ssl-to-java.html</id><summary type="html">&lt;p&gt;This is something that crops up from time to time and is annoying to go Stack Overflow mining each time I need it. So I'm putting it here for my sake, and hope it helps you too:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+&lt;span class="nv"&gt;SITE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;github.com&amp;quot;&lt;/span&gt;
+&lt;span class="c1"&gt;# get github cert from the server
+&lt;/span&gt;openssl x509 -in &amp;lt;&lt;span class="o"&gt;(&lt;/span&gt;openssl s_client -connect $SITE:443 -prexit 2&amp;gt;/dev/null&lt;span class="o"&gt;)&lt;/span&gt; -out ~/$SITE.crt
+&lt;span class="c1"&gt;# add it to the java keystore (yes, the storepass is literally 'changeit')
+&lt;/span&gt;/usr/java/default/bin/keytool -noprompt -importcert -file ~/$SITE.crt &lt;span class="se"&gt;\
+&lt;/span&gt;    -alias github -keystore /usr/java/default/jre/lib/security/cacerts -storepass changeit
+&lt;span class="c1"&gt;# clean up
+&lt;/span&gt;rm ~/$SITE.crt
+&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; Remove the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-noprompt&lt;/span&gt;&lt;/tt&gt; flag if you'd prefer to see the cert before accepting it.&lt;/p&gt;
+</summary><category term="bash"></category><category term="java"></category><category term="ssl"></category><category term="cert"></category><category term="keystore"></category></entry></feed>

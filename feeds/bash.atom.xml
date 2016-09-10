@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>tedops</title><link href="http://tedops.github.io/" rel="alternate"></link><link href="http://tedops.github.io/feeds/bash.atom.xml" rel="self"></link><id>http://tedops.github.io/</id><updated>2015-11-06T00:00:00-08:00</updated><entry><title>Bash Builtin Override Trick</title><link href="http://tedops.github.io/bash-builtin-trick.html" rel="alternate"></link><updated>2015-11-06T00:00:00-08:00</updated><author><name>Ted Sheibar</name></author><id>tag:tedops.github.io,2015-11-06:bash-builtin-trick.html</id><summary type="html">&lt;p&gt;Over the years, I have found this trick useful for various things and wanted to share them.&lt;/p&gt;
+&lt;p&gt;I just used this again today to help with some error checking (probably because I've been on a &lt;a class="reference external" href="http://chimera.labs.oreilly.com/books/1234000000754/index.html"&gt;Python + TDD&lt;/a&gt; kick lately...), and it allowed me to debug &amp;amp; fix an issue rather quickly.&lt;/p&gt;
+&lt;div class="section" id="what-is-a-bash-builtin"&gt;
+&lt;h2&gt;What is a Bash Builtin?&lt;/h2&gt;
+&lt;p&gt;According to &lt;a class="reference external" href="http://www.tldp.org/LDP/abs/html/internal.html"&gt;tldp.org&lt;/a&gt;, bash builtins are:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+A builtin is a command contained within the Bash tool set, literally built in.
+This is either for performance reasons -- builtins execute faster than external
+commands, which usually require forking off [1] a separate process -- or
+because a particular builtin needs direct access to the shell internals.
+&lt;/pre&gt;
+&lt;p&gt;You likely use them everyday without even realizing they are builtins - like &lt;tt class="docutils literal"&gt;echo&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;test&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;source&lt;/tt&gt;, and &lt;tt class="docutils literal"&gt;unset&lt;/tt&gt;. What's not as well-known is that these can be overridden.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="testing-the-return-value"&gt;
+&lt;h2&gt;Testing The Return Value&lt;/h2&gt;
+&lt;p&gt;While building a chroot jail, I had 3 separate sections where yum was installing particular packages that I had labelled &lt;tt class="docutils literal"&gt;prep&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;setup&lt;/tt&gt;, and &lt;tt class="docutils literal"&gt;main&lt;/tt&gt; accordingly. The problem was that packages in the &lt;tt class="docutils literal"&gt;main&lt;/tt&gt; section were failing to install because of dependency resolution errors.&lt;/p&gt;
+&lt;p&gt;Typical problem, but nothing looked out of the ordinary to me in the output.&lt;/p&gt;
+&lt;p&gt;So, here's what I ended up doing:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+&lt;span class="ch"&gt;#!/bin/bash
+&lt;/span&gt;
+test&lt;span class="o"&gt;()&lt;/span&gt;
+&lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="nb"&gt;builtin&lt;/span&gt; &lt;span class="nb"&gt;test&lt;/span&gt; &lt;span class="nv"&gt;$1&lt;/span&gt; -eq &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;[ERROR] &lt;/span&gt;&lt;span class="nv"&gt;$2&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+        &lt;span class="nb"&gt;exit&lt;/span&gt; &lt;span class="nv"&gt;$2&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="c1"&gt;# PREP
+&lt;/span&gt;yum -y install centos rpm-python
+&lt;span class="nb"&gt;test&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$?&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Yum installation error (PREP). See above.&amp;quot;&lt;/span&gt;
+
+&lt;span class="c1"&gt;# SETUP
+&lt;/span&gt;yum -y install rpm-build
+&lt;span class="nb"&gt;test&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$?&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Yum installation error (SETUP). See above.&amp;quot;&lt;/span&gt;
+
+&lt;span class="c1"&gt;# MAIN
+&lt;/span&gt;yum -y install my-cool-package
+&lt;span class="nb"&gt;test&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$?&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Yum installation error (MAIN). See above.&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Overriding the &lt;tt class="docutils literal"&gt;test&lt;/tt&gt; builtin allowed me to abide by the DRY principle by having a single method to test return values. &lt;strong&gt;Notice&lt;/strong&gt; that the overriding is achieved by using the &lt;tt class="docutils literal"&gt;builtin&lt;/tt&gt; reserved keyword to execute the builtin version of the command you want to use.&lt;/p&gt;
+&lt;p&gt;After I ran this, it turned out that two packages - one in PREP and the other in SETUP - were unsigned, which was causing the failure. Without these checks in place, it would have taken a very long time for me to comb through the 100s of dependencies coupled with the packages we were trying to install.&lt;/p&gt;
+&lt;p&gt;Using comments to label sections, and then adding that label to the error message, really helped me quickly narrow down where the real problem was...which was NOT depsolving problems with my-cool-package as I originally thought.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="echo-logging"&gt;
+&lt;h2&gt;Echo &amp;amp; Logging&lt;/h2&gt;
+&lt;p&gt;Another useful trick is overriding the &lt;tt class="docutils literal"&gt;echo&lt;/tt&gt; command. Here's what I generally use for logging output with bash scripts:&lt;/p&gt;
+&lt;pre class="code Bash literal-block"&gt;
+&lt;span class="ch"&gt;#!/bin/bash
+&lt;/span&gt;
+echo&lt;span class="o"&gt;()&lt;/span&gt;
+&lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="nb"&gt;builtin&lt;/span&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;[&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;date &lt;span class="s1"&gt;'+%Y-%m-%d %H:%M:%S'&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;] &lt;/span&gt;&lt;span class="nv"&gt;$*&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Installing packages...&amp;quot;&lt;/span&gt;
+yum -y install my-cool-package rpm-build
+&lt;/pre&gt;
+&lt;p&gt;This prints a timestamp for every call to &lt;tt class="docutils literal"&gt;echo&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;This trick can likely be extended many ways, but I've found these two use cases to be the most applicable and useful for everyday script writing, debugging, and running.&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="bash"></category><category term="builtin"></category><category term="test"></category><category term="echo"></category></entry></feed>
