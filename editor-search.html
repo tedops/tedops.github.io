@@ -1,79 +1,102 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" type="text/css" href="/theme/css/style.min.css">
-  <link rel="stylesheet" type="text/css" href="/theme/css/pygments.min.css">
-  <link rel="stylesheet" type="text/css" href="/theme/css/font-awesome.min.css">
+
+    <link rel="stylesheet" type="text/css" href="https://tedops.github.io/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="https://tedops.github.io/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="https://tedops.github.io/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
 
   <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="" />
+
+
 <meta name="author" content="Ted Sheibar" />
 <meta name="description" content="Short review and rationale of my editor choices" />
-<meta name="keywords" content="editor, emacs, vim, sublime, sublimetext, pycharm">
+<meta name="keywords" content="editor, emacs, vim, atom, sublime, sublimetext, pycharm">
 <meta property="og:site_name" content="tedops"/>
 <meta property="og:title" content="The Search for the Perfect Editor"/>
 <meta property="og:description" content="Short review and rationale of my editor choices"/>
 <meta property="og:locale" content="en_US"/>
-<meta property="og:url" content="/editor-search.html"/>
+<meta property="og:url" content="https://tedops.github.io/editor-search.html"/>
 <meta property="og:type" content="article"/>
 <meta property="article:published_time" content="2016-08-11 00:00:00-07:00"/>
 <meta property="article:modified_time" content="2016-08-11 00:00:00-07:00"/>
-<meta property="article:author" content="/author/ted-sheibar.html">
+<meta property="article:author" content="https://tedops.github.io/author/ted-sheibar.html">
 <meta property="article:section" content="Tools"/>
 <meta property="article:tag" content="editor"/>
 <meta property="article:tag" content="emacs"/>
 <meta property="article:tag" content="vim"/>
+<meta property="article:tag" content="atom"/>
 <meta property="article:tag" content="sublime"/>
 <meta property="article:tag" content="sublimetext"/>
 <meta property="article:tag" content="pycharm"/>
-<meta property="og:image" content="">  <title>tedops &ndash; The Search for the Perfect Editor</title>
+<meta property="og:image" content="theme/img/profile.png">
+
+  <title>tedops &ndash; The Search for the Perfect Editor</title>
 </head>
 <body>
   <aside>
     <div>
-      <!-- a href="" -->
-      <a href="/index.html">
-        <img src="/theme/img/profile.png" alt="ted sheibar" title="ted sheibar">
+      <a href="https://tedops.github.io">
+        <img src="theme/img/profile.png" alt="ted sheibar" title="ted sheibar">
       </a>
-      <h1><a href="">ted sheibar</a></h1>
-      <p>Release Engineer  •  SRE  •  Python Enthusiast</p>
+      <h1><a href="https://tedops.github.io">ted sheibar</a></h1>
+
+<p>Release Engineer  •  SRE  •  Python Enthusiast</p>
       <nav>
         <ul class="list">
+
           <li><a href="https://www.docker.com/" target="_blank">Docker</a></li>
+          <li><a href="https://mesos.apache.org/" target="_blank">Mesos</a></li>
           <li><a href="https://www.python.org/" target="_blank">Python</a></li>
           <li><a href="https://docs.saltstack.com/en/latest/" target="_blank">SaltStack</a></li>
         </ul>
       </nav>
+
       <ul class="social">
         <li><a class="sc-github" href="http://github.com/tedops" target="_blank"><i class="fa fa-github"></i></a></li>
-        <li><a class="sc-linkedin" href="https://www.linkedin.com/in/theodore-sheibar-21536376" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-linkedin" href="https://www.linkedin.com/pub/theodore-sheibar/76/363/215" target="_blank"><i class="fa fa-linkedin"></i></a></li>
         <li><a class="sc-twitter" href="http://twitter.com/tedops" target="_blank"><i class="fa fa-twitter"></i></a></li>
       </ul>
     </div>
   </aside>
   <main>
     <nav>
-      <!-- a href="">Home</a -->
-      <a href="/index.html">Home</a>
-      <a href="/contribs.html">Open source Contributions</a>
+      <a href="https://tedops.github.io">    Home
+</a>
+
       <a href="/archives.html">Archives</a>
       <a href="/authors.html">Authors</a>
       <a href="/categories.html">Categories</a>
       <a href="/tags.html">Tags</a>
+
+
     </nav>
 
 <article>
   <header>
     <h1 id="editor-search">The Search for the Perfect Editor</h1>
-    <p>Posted on Thu 11 August 2016 in <a href="/category/tools.html">Tools</a></p>
+    <p>
+          Posted on Thu 11 August 2016 in <a href="https://tedops.github.io/category/tools.html">Tools</a>
+
+
+    </p>
   </header>
   <div>
-    <p>I've been listening to <a class="reference external" href="https://talkpython.fm">a fantastic podcast</a> lately and, as one of the final questions, the interviewer always asks his guests what is their editor of choice. I get the question on a somewhat regular basis as well, and since that podcast got me trying different editors from my usual go-tos, I thought I'd write down my reasons for my editor choices.</p>
+    <p>I've been listening to <a class="reference external" href="https://talkpython.fm/">a fantastic podcast</a> lately and, as one of the final questions, the interviewer always asks his guests what is their editor of choice. I get the question on a somewhat regular basis as well, and since that podcast got me trying different editors from my usual go-tos, I thought I'd write down my reasons for my editor choices.</p>
 <p>First, I should probably say that I prefer being a jack of all trades. Most people when hearing that think, &quot;and master of none,&quot; therefore I must be a dilettante, dabbler, or similar. However, here's the full phrase:</p>
 <pre class="literal-block">
-Jack of all trades, master of none, though ofttimes better than master of one
+Jack of all trades, master of none, though ofttimes better than master of one.
 </pre>
 <p>With that in mind, here are the tools I use for development.</p>
 <div class="section" id="the-cli">
@@ -86,8 +109,8 @@ Jack of all trades, master of none, though ofttimes better than master of one
 <p>At least, enough to confidently use it if, say, I needed to edit a file on some emacs user's computer while helping debug. What I didn't expect was just how often I would continue to use emacs after I felt I had a sufficient amount of basic skill.</p>
 <p>To me, what's nice about emacs is its translation to the Linux command line, and the <tt class="docutils literal">less</tt> command. All of the navigation, word replacement, deletion, and undo are exactly the same. It made my entire Linux experience more seamless, which was something I certainly didn't expect.</p>
 <p>Oh, and forget about &quot;vim mode&quot; on the command line (<tt class="docutils literal">set <span class="pre">-o</span> vi</tt>). Have you used it? And you like it?? Now you're just being difficult on purpose. :)</p>
-<p>But, by the same token, I found emacs to be too heavyweight if I want to make quick modifications to a file, or peruse something with a finer grain of control than piping to <tt class="docutils literal">less</tt>. Vim is very useful for those occasions, particularly since I can expect it to be installed on any server to which I need to connect (well, at least I know <tt class="docutils literal">vi</tt> will be installed, if not <tt class="docutils literal">vim</tt>).</p>
-<p>All of this can be summed up as: for config file editing/quick perusing, I use <tt class="docutils literal">vim</tt>. For any more serious development/script writing, I'll use emacs (<tt class="docutils literal">yum install <span class="pre">emacs-nox</span></tt>).</p>
+<p>But, by the same token, I found emacs to be too heavyweight if I want to make quick modifications to a file, or peruse something with a finer grain of control than piping to <tt class="docutils literal">less</tt>. <tt class="docutils literal">Vim</tt> is very useful for those occasions, particularly since I can expect it to be installed on any server to which I need to connect (well, at least I know <tt class="docutils literal">vi</tt> will be installed, if not <tt class="docutils literal">vim</tt>).</p>
+<p>All of this can be summed up as: for config file editing/quick perusing, I use <tt class="docutils literal">vim</tt>. For any more serious development/script writing, I'll use <tt class="docutils literal">emacs</tt> (<tt class="docutils literal">yum install <span class="pre">emacs-nox</span></tt>).</p>
 </div>
 <div class="section" id="the-gui">
 <h2>The GUI</h2>
@@ -116,20 +139,27 @@ Jack of all trades, master of none, though ofttimes better than master of one
   </div>
   <div class="tag-cloud">
     <p>
-      <a href="/tag/editor.html">editor</a>
-      <a href="/tag/emacs.html">emacs</a>
-      <a href="/tag/vim.html">vim</a>
-      <a href="/tag/sublime.html">sublime</a>
-      <a href="/tag/sublimetext.html">sublimetext</a>
-      <a href="/tag/pycharm.html">pycharm</a>
+      <a href="https://tedops.github.io/tag/editor.html">editor</a>
+      <a href="https://tedops.github.io/tag/emacs.html">emacs</a>
+      <a href="https://tedops.github.io/tag/vim.html">vim</a>
+      <a href="https://tedops.github.io/tag/atom.html">atom</a>
+      <a href="https://tedops.github.io/tag/sublime.html">sublime</a>
+      <a href="https://tedops.github.io/tag/sublimetext.html">sublimetext</a>
+      <a href="https://tedops.github.io/tag/pycharm.html">pycharm</a>
     </p>
   </div>
+
+
+
 </article>
 
     <footer>
-      <p>&copy; Ted Sheibar </p>
-<p>Built using <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a></p>    </footer>
+<p>&copy; Ted Sheibar </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
   </main>
+
+<!-- Google Analytics -->
 <script type="text/javascript">
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -139,22 +169,19 @@ Jack of all trades, master of none, though ofttimes better than master of one
   ga('create', 'UA-73404444-1', 'auto');
   ga('send', 'pageview');
 </script>
+<!-- End Google Analytics -->
+
+
+
 <script type="application/ld+json">
 {
-  "@context": "http://schema.org",
-  "@type": "BlogPosting",
-  "name": "The Search for the Perfect Editor",
-  "headline": "The Search for the Perfect Editor",
-  "datePublished": "2016-08-11 00:00:00-07:00",
-  "dateModified": "2016-08-11 00:00:00-07:00",
-  "author": {
-    "@type": "Person",
-    "name": "Ted Sheibar",
-    "url": "/author/ted-sheibar.html"
-  },
-  "image": "{{ SITEURL }}/{{ THEME_STATIC_DIR }}/img/profile.png",
-  "url": "/editor-search.html",
-  "description": "Short review and rationale of my editor choices"
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " tedops ",
+  "url" : "https://tedops.github.io",
+  "image": "theme/img/profile.png",
+  "description": ""
 }
-</script></body>
+</script>
+</body>
 </html>

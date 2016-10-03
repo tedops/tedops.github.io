@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="" />
+
+
+<meta name="author" content="Ted Sheibar" />
+<meta name="description" content="Short review and rationale of my editor choices" />
+<meta name="keywords" content="editor, emacs, vim, atom, sublime, sublimetext, pycharm">
+<meta property="og:site_name" content="tedops"/>
+<meta property="og:title" content="The Search for the Perfect Editor"/>
+<meta property="og:description" content="Short review and rationale of my editor choices"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/the-search-for-the-perfect-editor.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2016-08-11 00:00:00-07:00"/>
+<meta property="article:modified_time" content="2016-08-11 00:00:00-07:00"/>
+<meta property="article:author" content="/author/ted-sheibar.html">
+<meta property="article:section" content="Tools"/>
+<meta property="article:tag" content="editor"/>
+<meta property="article:tag" content="emacs"/>
+<meta property="article:tag" content="vim"/>
+<meta property="article:tag" content="atom"/>
+<meta property="article:tag" content="sublime"/>
+<meta property="article:tag" content="sublimetext"/>
+<meta property="article:tag" content="pycharm"/>
+<meta property="og:image" content="theme/img/profile.png">
+
+  <title>tedops &ndash; The Search for the Perfect Editor</title>
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="theme/img/profile.png" alt="ted sheibar" title="ted sheibar">
+      </a>
+      <h1><a href="">ted sheibar</a></h1>
+
+<p>Release Engineer  •  SRE  •  Python Enthusiast</p>
+      <nav>
+        <ul class="list">
+
+          <li><a href="https://www.docker.com/" target="_blank">Docker</a></li>
+          <li><a href="https://mesos.apache.org/" target="_blank">Mesos</a></li>
+          <li><a href="https://www.python.org/" target="_blank">Python</a></li>
+          <li><a href="https://docs.saltstack.com/en/latest/" target="_blank">SaltStack</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-github" href="http://github.com/tedops" target="_blank"><i class="fa fa-github"></i></a></li>
+        <li><a class="sc-linkedin" href="https://www.linkedin.com/pub/theodore-sheibar/76/363/215" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-twitter" href="http://twitter.com/tedops" target="_blank"><i class="fa fa-twitter"></i></a></li>
+      </ul>
+    </div>
+  </aside>
+  <main>
+    <nav>
+      <a href="">    Home
+</a>
+
+      <a href="/archives.html">Archives</a>
+      <a href="/authors.html">Authors</a>
+      <a href="/categories.html">Categories</a>
+      <a href="/tags.html">Tags</a>
+
+
+    </nav>
+
+<article>
+  <header>
+    <h1 id="the-search-for-the-perfect-editor">The Search for the Perfect Editor</h1>
+    <p>
+          Posted on Thu 11 August 2016 in <a href="/category/tools.html">Tools</a>
+
+
+    </p>
+  </header>
+  <div>
+    <p>I've been listening to <a class="reference external" href="https://talkpython.fm/">a fantastic podcast</a> lately and, as one of the final questions, the interviewer always asks his guests what is their editor of choice. I get the question on a somewhat regular basis as well, and since that podcast got me trying different editors from my usual go-tos, I thought I'd write down my reasons for my editor choices.</p>
+<p>First, I should probably say that I prefer being a jack of all trades. Most people when hearing that think, &quot;and master of none,&quot; therefore I must be a dilettante, dabbler, or similar. However, here's the full phrase:</p>
+<pre class="literal-block">
+Jack of all trades, master of none, though ofttimes better than master of one.
+</pre>
+<p>With that in mind, here are the tools I use for development.</p>
+<div class="section" id="the-cli">
+<h2>The CLI</h2>
+<p>By experience, I'm a &quot;vim&quot; guy. Vim is fast, available on almost every command line, not really as hard to learn as people say, and makes you feel connected to a rich Linux tradition.</p>
+<p>That being said, I don't use it very much these days.</p>
+<p>As a vim user, I extolled its advantages, and eschewed &quot;Evil Emacs&quot; any chance I got. Of course, I didn't know how to use emacs then, so it was very easy for me to be disparaging towards it.</p>
+<p>But as I continued in my career, I met many people whom I like and respect who were emacs users. Working with them told me that there must be something to emacs, since they were clearly not stupid, and I couldn't believe that they'd use inferior stuff for their day-to-day livelihood.</p>
+<p>So, I learned emacs.</p>
+<p>At least, enough to confidently use it if, say, I needed to edit a file on some emacs user's computer while helping debug. What I didn't expect was just how often I would continue to use emacs after I felt I had a sufficient amount of basic skill.</p>
+<p>To me, what's nice about emacs is its translation to the Linux command line, and the <tt class="docutils literal">less</tt> command. All of the navigation, word replacement, deletion, and undo are exactly the same. It made my entire Linux experience more seamless, which was something I certainly didn't expect.</p>
+<p>Oh, and forget about &quot;vim mode&quot; on the command line (<tt class="docutils literal">set <span class="pre">-o</span> vi</tt>). Have you used it? And you like it?? Now you're just being difficult on purpose. :)</p>
+<p>But, by the same token, I found emacs to be too heavyweight if I want to make quick modifications to a file, or peruse something with a finer grain of control than piping to <tt class="docutils literal">less</tt>. <tt class="docutils literal">Vim</tt> is very useful for those occasions, particularly since I can expect it to be installed on any server to which I need to connect (well, at least I know <tt class="docutils literal">vi</tt> will be installed, if not <tt class="docutils literal">vim</tt>).</p>
+<p>All of this can be summed up as: for config file editing/quick perusing, I use <tt class="docutils literal">vim</tt>. For any more serious development/script writing, I'll use <tt class="docutils literal">emacs</tt> (<tt class="docutils literal">yum install <span class="pre">emacs-nox</span></tt>).</p>
+</div>
+<div class="section" id="the-gui">
+<h2>The GUI</h2>
+<p>It may be helpful first to lay out the rough criteria I use when choosing an editor. For starters, I've grown to be very comfortable on the command line and feel the most in control there in terms of editing and navigation. Using a GUI is something I gladly walked away from when I &quot;went Linux&quot; from Windows, however Mac has helped me once-again realize the benefits of clicking buttons and dragging things for productivity instead of straight-up typing.</p>
+<p>What do I look for? Nothing esoteric, I assure you: I want a text editor that's:</p>
+<ul class="simple">
+<li>fast</li>
+<li>cross-platform</li>
+<li>open sourced</li>
+<li>easy word-wrapping</li>
+<li>lightly customizable</li>
+<li>syntax highlighting</li>
+</ul>
+<p>I think we can all agree that's not a huge or unreasonable data set. I'd consider those my baseline to feel most comfortable in an editor. (And yes, if the price is reasonable, I'm willing to pay developers for their work.)</p>
+<p>As a reference to my experience, I've used TextMate, TextWrangler, Sublime Text, Atom, Gvim, XEmacs, KWrite, and Kate. However, I'm finding that my &quot;power combination&quot; is Atom and PyCharm.</p>
+<p>Yes, PyCharm is an IDE more than an editor. However, much in the same way I use both vim and emacs for particular tasks, Atom + PyCharm are my GUI corollaries.</p>
+<p>I tried using Atom for Python development, and while I found it very useful, PyCharm is purpose-built for that, and I just missed its features too much to switch 100%. Of course, I don't always do Python development, but when I do, I choose PyCharm.</p>
+<p>Atom's easy customizability, plugin install system, syntax highlighting for well-known file types and languages, and being cross-platform hit every checkbox I expect from an editor.</p>
+<p>The only criticism I have so far about Atom is the load time is a little longer than I'd like. When you're in the middle of figuring out a problem in your head and you're looking to copy/paste something to help out, those extra seconds during startup can feel like an eternity. But, you know...first world problems.</p>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion</h2>
+<p>I will continue to keep my eye out for new editors, however for now, I'm rather content with vim, emacs, Atom, and PyCharm, and recommend you check them out as well.</p>
+</div>
+
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/editor.html">editor</a>
+      <a href="/tag/emacs.html">emacs</a>
+      <a href="/tag/vim.html">vim</a>
+      <a href="/tag/atom.html">atom</a>
+      <a href="/tag/sublime.html">sublime</a>
+      <a href="/tag/sublimetext.html">sublimetext</a>
+      <a href="/tag/pycharm.html">pycharm</a>
+    </p>
+  </div>
+
+
+
+</article>
+
+    <footer>
+<p>&copy; Ted Sheibar </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " tedops ",
+  "url" : "",
+  "image": "theme/img/profile.png",
+  "description": ""
+}
+</script>
+</body>
+</html>

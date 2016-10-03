@@ -1,14 +1,25 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" type="text/css" href="/theme/css/style.min.css">
-  <link rel="stylesheet" type="text/css" href="/theme/css/pygments.min.css">
-  <link rel="stylesheet" type="text/css" href="/theme/css/font-awesome.min.css">
+
+    <link rel="stylesheet" type="text/css" href="https://tedops.github.io/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="https://tedops.github.io/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="https://tedops.github.io/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
 
   <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="" />
+
+
 <meta name="author" content="Ted Sheibar" />
 <meta name="description" content="Commands to run in a Salt state and command line to get the default ethernet interface" />
 <meta name="keywords" content="how-to, salt, active, default, interface, ethernet, ifconfig, eth0">
@@ -16,11 +27,11 @@
 <meta property="og:title" content="How To Find the Default Active Ethernet Interface in a Salt State"/>
 <meta property="og:description" content="Commands to run in a Salt state and command line to get the default ethernet interface"/>
 <meta property="og:locale" content="en_US"/>
-<meta property="og:url" content="/how-to-find-default-active-ethernet-interface.html"/>
+<meta property="og:url" content="https://tedops.github.io/how-to-find-default-active-ethernet-interface.html"/>
 <meta property="og:type" content="article"/>
 <meta property="article:published_time" content="2016-02-04 00:00:00-08:00"/>
 <meta property="article:modified_time" content="2016-02-04 00:00:00-08:00"/>
-<meta property="article:author" content="/author/ted-sheibar.html">
+<meta property="article:author" content="https://tedops.github.io/author/ted-sheibar.html">
 <meta property="article:section" content="Salt"/>
 <meta property="article:tag" content="how-to"/>
 <meta property="article:tag" content="salt"/>
@@ -30,46 +41,57 @@
 <meta property="article:tag" content="ethernet"/>
 <meta property="article:tag" content="ifconfig"/>
 <meta property="article:tag" content="eth0"/>
-<meta property="og:image" content="">  <title>tedops &ndash; How To Find the Default Active Ethernet Interface in a Salt State</title>
+<meta property="og:image" content="theme/img/profile.png">
+
+  <title>tedops &ndash; How To Find the Default Active Ethernet Interface in a Salt State</title>
 </head>
 <body>
   <aside>
     <div>
-      <!-- a href="" -->
-      <a href="/index.html">
-        <img src="/theme/img/profile.png" alt="ted sheibar" title="ted sheibar">
+      <a href="https://tedops.github.io">
+        <img src="theme/img/profile.png" alt="ted sheibar" title="ted sheibar">
       </a>
-      <h1><a href="">ted sheibar</a></h1>
-      <p>Release Engineer  •  SRE  •  Python Enthusiast</p>
+      <h1><a href="https://tedops.github.io">ted sheibar</a></h1>
+
+<p>Release Engineer  •  SRE  •  Python Enthusiast</p>
       <nav>
         <ul class="list">
+
           <li><a href="https://www.docker.com/" target="_blank">Docker</a></li>
+          <li><a href="https://mesos.apache.org/" target="_blank">Mesos</a></li>
           <li><a href="https://www.python.org/" target="_blank">Python</a></li>
           <li><a href="https://docs.saltstack.com/en/latest/" target="_blank">SaltStack</a></li>
         </ul>
       </nav>
+
       <ul class="social">
         <li><a class="sc-github" href="http://github.com/tedops" target="_blank"><i class="fa fa-github"></i></a></li>
-        <li><a class="sc-linkedin" href="https://www.linkedin.com/in/theodore-sheibar-21536376" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-linkedin" href="https://www.linkedin.com/pub/theodore-sheibar/76/363/215" target="_blank"><i class="fa fa-linkedin"></i></a></li>
         <li><a class="sc-twitter" href="http://twitter.com/tedops" target="_blank"><i class="fa fa-twitter"></i></a></li>
       </ul>
     </div>
   </aside>
   <main>
     <nav>
-      <!-- a href="">Home</a -->
-      <a href="/index.html">Home</a>
-      <a href="/contribs.html">Open source Contributions</a>
+      <a href="https://tedops.github.io">    Home
+</a>
+
       <a href="/archives.html">Archives</a>
       <a href="/authors.html">Authors</a>
       <a href="/categories.html">Categories</a>
       <a href="/tags.html">Tags</a>
+
+
     </nav>
 
 <article>
   <header>
     <h1 id="how-to-find-default-active-ethernet-interface">How To Find the Default Active Ethernet Interface in a Salt State</h1>
-    <p>Posted on Thu 04 February 2016 in <a href="/category/salt.html">Salt</a></p>
+    <p>
+          Posted on Thu 04 February 2016 in <a href="https://tedops.github.io/category/salt.html">Salt</a>
+
+
+    </p>
   </header>
   <div>
     <p>Recently, I was working with my friend <a class="reference external" href="http://bobbylikeslinux.net/">Bobby</a>, and we needed a way to find out the default ethernet interface on a host. We were trying to dynamically configure an iptables rule (forwarding port 80 requests to 8153) to use the host's active port when applying a <a class="reference external" href="https://docs.saltstack.com/en/latest/topics/tutorials/starting_states.html">Salt state</a>. We also wanted to avoid using <a class="reference external" href="https://www.nginx.com/">nginx</a> as a hammer to fix Yet Another Routing Problem.</p>
@@ -129,22 +151,28 @@ local:
   </div>
   <div class="tag-cloud">
     <p>
-      <a href="/tag/how-to.html">how-to</a>
-      <a href="/tag/salt.html">salt</a>
-      <a href="/tag/active.html">active</a>
-      <a href="/tag/default.html">default</a>
-      <a href="/tag/interface.html">interface</a>
-      <a href="/tag/ethernet.html">ethernet</a>
-      <a href="/tag/ifconfig.html">ifconfig</a>
-      <a href="/tag/eth0.html">eth0</a>
+      <a href="https://tedops.github.io/tag/how-to.html">how-to</a>
+      <a href="https://tedops.github.io/tag/salt.html">salt</a>
+      <a href="https://tedops.github.io/tag/active.html">active</a>
+      <a href="https://tedops.github.io/tag/default.html">default</a>
+      <a href="https://tedops.github.io/tag/interface.html">interface</a>
+      <a href="https://tedops.github.io/tag/ethernet.html">ethernet</a>
+      <a href="https://tedops.github.io/tag/ifconfig.html">ifconfig</a>
+      <a href="https://tedops.github.io/tag/eth0.html">eth0</a>
     </p>
   </div>
+
+
+
 </article>
 
     <footer>
-      <p>&copy; Ted Sheibar </p>
-<p>Built using <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a></p>    </footer>
+<p>&copy; Ted Sheibar </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
   </main>
+
+<!-- Google Analytics -->
 <script type="text/javascript">
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -154,22 +182,19 @@ local:
   ga('create', 'UA-73404444-1', 'auto');
   ga('send', 'pageview');
 </script>
+<!-- End Google Analytics -->
+
+
+
 <script type="application/ld+json">
 {
-  "@context": "http://schema.org",
-  "@type": "BlogPosting",
-  "name": "How To Find the Default Active Ethernet Interface in a Salt State",
-  "headline": "How To Find the Default Active Ethernet Interface in a Salt State",
-  "datePublished": "2016-02-04 00:00:00-08:00",
-  "dateModified": "2016-02-04 00:00:00-08:00",
-  "author": {
-    "@type": "Person",
-    "name": "Ted Sheibar",
-    "url": "/author/ted-sheibar.html"
-  },
-  "image": "{{ SITEURL }}/{{ THEME_STATIC_DIR }}/img/profile.png",
-  "url": "/how-to-find-default-active-ethernet-interface.html",
-  "description": "Commands to run in a Salt state and command line to get the default ethernet interface"
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " tedops ",
+  "url" : "https://tedops.github.io",
+  "image": "theme/img/profile.png",
+  "description": ""
 }
-</script></body>
+</script>
+</body>
 </html>
