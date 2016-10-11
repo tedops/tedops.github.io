@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="https://tedops.github.io/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="https://tedops.github.io/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="https://tedops.github.io/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="" />
+
+
+<meta name="author" content="Ted Sheibar" />
+<meta name="description" content="How I got the changes from non-contiguous, discrete Git commits to save someone's bacon" />
+<meta name="keywords" content="git, bash, gocd">
+<meta property="og:site_name" content="tedops"/>
+<meta property="og:title" content="Reverting Distinct Git Commits"/>
+<meta property="og:description" content="How I got the changes from non-contiguous, discrete Git commits to save someone's bacon"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="https://tedops.github.io/revert-separate-git-commits.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2016-10-10 00:00:00-07:00"/>
+<meta property="article:modified_time" content="2016-10-10 00:00:00-07:00"/>
+<meta property="article:author" content="https://tedops.github.io/author/ted-sheibar.html">
+<meta property="article:section" content="Git"/>
+<meta property="article:tag" content="git"/>
+<meta property="article:tag" content="bash"/>
+<meta property="article:tag" content="gocd"/>
+<meta property="og:image" content="theme/img/profile.png">
+
+  <title>tedops &ndash; Reverting Distinct Git Commits</title>
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="https://tedops.github.io">
+        <img src="theme/img/profile.png" alt="ted sheibar" title="ted sheibar">
+      </a>
+      <h1><a href="https://tedops.github.io">ted sheibar</a></h1>
+
+<p>Release Engineer  •  SRE  •  Python Enthusiast</p>
+      <nav>
+        <ul class="list">
+
+          <li><a href="https://www.docker.com/" target="_blank">Docker</a></li>
+          <li><a href="https://mesos.apache.org/" target="_blank">Mesos</a></li>
+          <li><a href="https://www.python.org/" target="_blank">Python</a></li>
+          <li><a href="https://docs.saltstack.com/en/latest/" target="_blank">SaltStack</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-github" href="http://github.com/tedops" target="_blank"><i class="fa fa-github"></i></a></li>
+        <li><a class="sc-linkedin" href="https://www.linkedin.com/pub/theodore-sheibar/76/363/215" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-twitter" href="http://twitter.com/tedops" target="_blank"><i class="fa fa-twitter"></i></a></li>
+      </ul>
+    </div>
+  </aside>
+  <main>
+    <nav>
+      <a href="https://tedops.github.io">    Home
+</a>
+
+      <a href="/archives.html">Archives</a>
+      <a href="/authors.html">Authors</a>
+      <a href="/categories.html">Categories</a>
+      <a href="/tags.html">Tags</a>
+
+
+    </nav>
+
+<article>
+  <header>
+    <h1 id="revert-separate-git-commits">Reverting Distinct Git Commits</h1>
+    <p>
+          Posted on Mon 10 October 2016 in <a href="https://tedops.github.io/category/git.html">Git</a>
+
+
+    </p>
+  </header>
+  <div>
+    <div class="section" id="the-cloud">
+<h2>The Cloud</h2>
+<p>A developer contacted me with a problem: he had created a clone of a pipeline in GoCD that was created from a template, and was making changes to that pipeline, thinking that he was editing his clone. Seems legit.</p>
+<p>What he didn't realize was that, in GoCD, changes to a template apply immediately to all other pipelines created from that template. Yikes.</p>
+<p>His first changes started on Friday morning and it was now Monday afternoon. That means there have been many changes to the config from many other people since then that would have to be preserved, while extracting only his changes. Double yikes.</p>
+</div>
+<div class="section" id="the-silver-lining">
+<h2>The Silver Lining</h2>
+<p>GoCD saves any changes made to its main config file (<tt class="docutils literal"><span class="pre">cruise-config.xml</span></tt>) in an internal git repo. This was a relief, as I could see what happened when, and have a fighting chance to revert it.</p>
+</div>
+<div class="section" id="the-challenges">
+<h2>The Challenges</h2>
+<p>Because other people's changes (commits) were interspersed with the changes I needed to pull out, I'd have to figure out how to get only that user's changes.</p>
+<p>In addition, I couldn't just &quot;force push&quot; a rebased branch into the internal git repo, because there may have been associated info with those commits that existed in the app's underlying database.</p>
+</div>
+<div class="section" id="the-solution">
+<h2>The Solution</h2>
+<p>First, finding that specific user's commits was thankfully simple - I just grepped the log for that user's name, and got each commit hash:</p>
+<p>Here's a sample of the output GoCD has of its internal repo:</p>
+<pre class="literal-block">
+38c8da1 user:anonymous|timestamp:1476131511596|schema_version:82|go_edition:OpenSource|go_version:16.6.0 (3590-af0f8b8ae8a4342ab748ce8022
+803fa79 user:jack.mcgaw|timestamp:1476131062982|schema_version:82|go_edition:OpenSource|go_version:16.6.0 (3590-af0f8b8ae8a4342ab748ce8022
+58df619 user:anonymous|timestamp:1476131052990|schema_version:82|go_edition:OpenSource|go_version:16.6.0 (3590-af0f8b8ae8a4342ab748ce8022
+7f31528 user:anonymous|timestamp:1476130458484|schema_version:82|go_edition:OpenSource|go_version:16.6.0 (3590-af0f8b8ae8a4342ab748ce8022
+a4e449d user:jack.mcgaw|timestamp:1476126266851|schema_version:82|go_edition:OpenSource|go_version:16.6.0 (3590-af0f8b8ae8a4342ab748ce8022
+89fc7b5 user:nisa.chazon|timestamp:1476126266520|schema_version:82|go_edition:OpenSource|go_version:16.6.0 (3590-af0f8b8ae8a4342ab748ce8022
+</pre>
+<p>So, I grepped for the user I needed (&quot;jack.mcgaw&quot; in the above example) and pulled out the commits:</p>
+<pre class="code bash literal-block">
+$ git log --oneline -100 <span class="p">|</span> awk <span class="s1">'/jack.mcgaw/ {print $1}'</span>
+</pre>
+<p>This gave me a list of 18 commits in total that needed to be reverted. To confirm that date/time was correct, I <a class="reference external" href="http://www.epochconverter.com/">used an online epoch converter</a> and verified the commit + time with the developer after finding what I thought was probably the first of his changes.</p>
+<p>At this point, had this been a typical Github repository, I could have interactively rebased the branch, marked each commit from this list as deleted, force pushed, and called it a day. However, I wasn't sure if the app's database had some tie-in with this config repo, so I didn't want to risk corrupting the DB through a force push.</p>
+<p>This small repo simply tracked the changes to one file. How could I undo the changes to this file from discrete, non-contiguous commits?</p>
+</div>
+<div class="section" id="the-patches">
+<h2>The Patches</h2>
+<p>Old school ftw! My first attempt, just like any developer, was to over-engineer what eventually was a simple solution - use patches.</p>
+<p>I created a patch for each commit listed and figured I could just reverse-apply them in sequence to the config file. Genius!</p>
+<p>But of course, I wanted to number each file so I could easily see said sequence, and more easily pass them as an ordered list. Then I could easily loop over them and reverse-apply each one to the config file. So simple, right??:</p>
+<pre class="code bash literal-block">
+$ <span class="nv">a</span><span class="o">=</span><span class="m">0</span> <span class="p">;</span> <span class="k">for</span> c in <span class="k">$(</span>git log --oneline -100 <span class="p">|</span> awk <span class="s1">'/jack.mcgaw/ {print $1}'</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span> <span class="o">[[</span> <span class="nv">$a</span> -lt <span class="m">10</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">prefix</span><span class="o">=</span><span class="s2">&quot;0</span><span class="si">${</span><span class="nv">a</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">||</span> <span class="nv">prefix</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">a</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">;</span> git format-patch -1 --stdout <span class="nv">$c</span> &gt; <span class="nv">$prefix</span>-<span class="nv">$c</span>.patch<span class="p">;</span> <span class="nv">a</span><span class="o">=</span><span class="k">$((</span><span class="nv">a</span><span class="o">=</span>a+1<span class="k">))</span> <span class="p">;</span> <span class="k">done</span>
+</pre>
+<p>This worked. But, look at it. Yuck.</p>
+</div>
+<div class="section" id="the-refactor">
+<h2>The Refactor</h2>
+<p>Creating a patch still seemed like a solid idea, but I could already tell this was shaping up to be too complicated to what was basically just applying a patch to file.</p>
+<p>How about if I just created one big patch which I could apply to the file?</p>
+<pre class="code bash literal-block">
+$ <span class="k">for</span> c in <span class="k">$(</span>git log --oneline -100 <span class="p">|</span> awk <span class="s1">'/jack.mcgaw/ {print $1}'</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span> git format-patch -1 --stdout <span class="nv">$c</span> &gt;&gt; big.patch <span class="p">;</span> <span class="k">done</span>
+
+$ git apply -R big.patch
+</pre>
+<p>Ah, much better. And it worked like a charm.</p>
+<p>I copied the entire resulting file, and pasted it into the &quot;Config XML&quot; editor in GoCD's UI, thinking that doing so would be a &quot;legitimate&quot; change to GoCD, so any/all DB updates &amp; XSD adjustments would happen accordingly. I was right (yay!).</p>
+<p>Bonus: I was able to share the &quot;<tt class="docutils literal">big.patch</tt>&quot; file contents with the developer before applying it to further verify if these changes were the ones he expected to get reverted (they were).</p>
+</div>
+<div class="section" id="the-conclusion">
+<h2>The Conclusion</h2>
+<p>Google easily found documentation for me on how to get the changes within a range of git commits. But it wasn't easy for me to find docs on getting the changes from discrete, non-contiguous commits spread out over time from one user. In addition, having the constraint of not being able to rebase the branch was a departure from my usual git toolbox of tricks.</p>
+<p>As always, I hope you found this interesting, and saves you extra time digging around the interwebs.</p>
+</div>
+
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://tedops.github.io/tag/git.html">git</a>
+      <a href="https://tedops.github.io/tag/bash.html">bash</a>
+      <a href="https://tedops.github.io/tag/gocd.html">gocd</a>
+    </p>
+  </div>
+
+
+
+</article>
+
+    <footer>
+<p>&copy; Ted Sheibar </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-73404444-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " tedops ",
+  "url" : "https://tedops.github.io",
+  "image": "theme/img/profile.png",
+  "description": ""
+}
+</script>
+</body>
+</html>
