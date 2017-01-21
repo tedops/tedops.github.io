@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="https://tedops.github.io/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="https://tedops.github.io/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="https://tedops.github.io/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="" />
+
+
+<meta name="author" content="Ted Sheibar" />
+<meta name="description" content="How to introduce changes to well-known, widely-used tools" />
+<meta name="keywords" content="separate, communicate, integrate, workflow, changes">
+<meta property="og:site_name" content="tedops"/>
+<meta property="og:title" content="Separate, Communicate, Integrate"/>
+<meta property="og:description" content="How to introduce changes to well-known, widely-used tools"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="https://tedops.github.io/sep-com-int.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2017-01-20 00:00:00-08:00"/>
+<meta property="article:modified_time" content="2017-01-20 00:00:00-08:00"/>
+<meta property="article:author" content="https://tedops.github.io/author/ted-sheibar.html">
+<meta property="article:section" content="communication"/>
+<meta property="article:tag" content="separate"/>
+<meta property="article:tag" content="communicate"/>
+<meta property="article:tag" content="integrate"/>
+<meta property="article:tag" content="workflow"/>
+<meta property="article:tag" content="changes"/>
+<meta property="og:image" content="theme/img/profile.png">
+
+  <title>tedops &ndash; Separate, Communicate, Integrate</title>
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="https://tedops.github.io">
+        <img src="theme/img/profile.png" alt="ted sheibar" title="ted sheibar">
+      </a>
+      <h1><a href="https://tedops.github.io">ted sheibar</a></h1>
+
+<p>Release Engineer  •  SRE  •  Python Enthusiast</p>
+      <nav>
+        <ul class="list">
+
+          <li><a href="https://www.docker.com/" target="_blank">Docker</a></li>
+          <li><a href="https://mesos.apache.org/" target="_blank">Mesos</a></li>
+          <li><a href="https://www.python.org/" target="_blank">Python</a></li>
+          <li><a href="https://docs.saltstack.com/en/latest/" target="_blank">SaltStack</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-github" href="http://github.com/tedops" target="_blank"><i class="fa fa-github"></i></a></li>
+        <li><a class="sc-linkedin" href="https://www.linkedin.com/pub/theodore-sheibar/76/363/215" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-twitter" href="http://twitter.com/tedops" target="_blank"><i class="fa fa-twitter"></i></a></li>
+      </ul>
+    </div>
+  </aside>
+  <main>
+    <nav>
+      <a href="https://tedops.github.io">    Home
+</a>
+
+      <a href="/archives.html">Archives</a>
+      <a href="/authors.html">Authors</a>
+      <a href="/categories.html">Categories</a>
+      <a href="/tags.html">Tags</a>
+
+
+    </nav>
+
+<article>
+  <header>
+    <h1 id="sep-com-int">Separate, Communicate, Integrate</h1>
+    <p>
+          Posted on Fri 20 January 2017 in <a href="https://tedops.github.io/category/communication.html">communication</a>
+
+
+    </p>
+  </header>
+  <div>
+    <p>Recently, I made a few changes to some tools that are in use by nearly all of the development teams with which I work.</p>
+<p>Having been in this situation before, I had previously just pushed out the changes, fully confident that we would be able to deal with the sparse fallout from doing so, knowing that the solution would be a simple tool upgrade.</p>
+<p>And truth be told, most stakeholders didn't even mind when that happened.</p>
+<p>But the ones who did mind, despite a quick resolution, got awfully tired of having to contact us. Plus, they tended to be higher up in the org chart than us. Double oops.</p>
+<p>Doing this was bad for many reasons, including:</p>
+<ul class="simple">
+<li>Stakeholders are powerless to modify scripts/processes to compensate for breaking changes.</li>
+<li>Over time, the team builds a bad reputation of having unstable tools.</li>
+<li>Incurs avoidable devotion of time for both the stakeholders and us to resolve.</li>
+<li>Embodies nearly all worst practices that Release Engineering stands for.</li>
+</ul>
+<p>But, we have been successfully following a new, common-sense mindset that can be summed up in 3 words (that all rhyme to make them easier to remember):</p>
+<p><em>Separate, Communicate, Integrate</em></p>
+<div class="section" id="step-1-separate">
+<h2>Step 1: Separate</h2>
+<p>Ever hear of a &quot;sandbox?&quot; Its meaning differs with each organization, however it's a term generally used to describe the isolation of a particular process, file, codebase, or system from other systems. Setting up a separation for your changes allows for free experimentation, plus it provides insurance against accidentally breaking anything.</p>
+<p>In Git, this can be a simple fork of an upstream codebase. In Docker, this could be a different tag on an existing image. In Salt, a different hierarchy within a pillar file.</p>
+<p>Whatever changes you make, ensure that you first have some separation between what is currently being used in production from what you have modified.</p>
+</div>
+<div class="section" id="step-2-communicate">
+<h2>Step 2: Communicate</h2>
+<p>Once your changes are complete and are ready for general consumption, first draft an email, write a wiki page, or otherwise document your changes (no, only comments in the code don't count) via whatever documentation media your org uses.</p>
+<p>What works for us is six-fold:</p>
+<ul class="simple">
+<li>Comments in the code</li>
+<li>A maintained man page</li>
+<li>A maintained in-repo README.rst file</li>
+<li>Email to the wider engineering org about the changes</li>
+<li>A broadcast chat room message in our team room</li>
+<li>Monthly team newsletter about changes we've made</li>
+</ul>
+<p>Yes, that is a lot. But even so, we still get stakeholders asking questions about changes that have been documented and accessible through all the usual methods and channels. This is likely why advertisers often talk about the importance and efficacy of repetition.</p>
+<p>Pro tip: get some kind of acknowledgment from your stakeholders that your message has been received. Remember, this is communication, not dictation, which means it's a two-way street. Heck, even TCP/IP uses a 3-way handshake!</p>
+</div>
+<div class="section" id="step-3-integrate">
+<h2>Step 3: Integrate</h2>
+<p>Once you have communicated through a reasonable number of channels and you've ACK'd your stakeholders' SYN-ACK (<a class="reference external" href="http://www.tcpipguide.com/free/t_TCPConnectionEstablishmentProcessTheThreeWayHandsh-3.htm">read this</a> if you don't understand that reference), now it's time to roll out your changes, whether it's a merge into a codebase, kicking off a pipeline, uploading to a filer, or all of the above.</p>
+<p>There could be a &quot;Step 4: Communicate again&quot; here, however, remembering the Golden Rule should be enough to help guide you in your next steps at this point. Plus, 'Communicate Again' doesn't rhyme with the other three.</p>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion</h2>
+<p>The next time you're excited to enrich the world with your new changes ASAP, take a sec and remember &quot;Separate, Communicate, Integrate.&quot; It'll save you, your team, and everyone else involved time and brainpower.</p>
+</div>
+
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://tedops.github.io/tag/separate.html">separate</a>
+      <a href="https://tedops.github.io/tag/communicate.html">communicate</a>
+      <a href="https://tedops.github.io/tag/integrate.html">integrate</a>
+      <a href="https://tedops.github.io/tag/workflow.html">workflow</a>
+      <a href="https://tedops.github.io/tag/changes.html">changes</a>
+    </p>
+  </div>
+
+
+
+</article>
+
+    <footer>
+<p>&copy; Ted Sheibar </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-73404444-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " tedops ",
+  "url" : "https://tedops.github.io",
+  "image": "theme/img/profile.png",
+  "description": ""
+}
+</script>
+</body>
+</html>
