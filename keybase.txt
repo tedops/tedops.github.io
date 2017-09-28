@@ -1,0 +1,55 @@
+==================================================================
+https://keybase.io/tedops
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://tedops.github.io
+  * I am tedops (https://keybase.io/tedops) on keybase.
+  * I have a public key ASDdyk8-lzWoiFAwy2jPhqMWoVfnSzT0hPCpNl4dxwKBYgo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "01201d73a790383910634e782ab3600250f972abae852c6e15854b8fe02529b6520b0a",
+      "host": "keybase.io",
+      "kid": "0120ddca4f3e9735a8885030cb68cf86a316a157e74b34f484f0a9365e1dc70281620a",
+      "uid": "ad097476d0e0b8db745910c5b7f66919",
+      "username": "tedops"
+    },
+    "merkle_root": {
+      "ctime": 1506574073,
+      "hash": "593149c1bfc852b821e014af7a7e1461433127db3029c9bcb0e234fe39ae573c819dde2ee00677c40a15d531d7f2448420883de6d4a7dec30a4114d5b22c94e7",
+      "hash_meta": "50a18fc26cf61bd194f8affea84943935c7b9ac93cf79296ab50e9b96970db95",
+      "seqno": 1468841
+    },
+    "service": {
+      "hostname": "tedops.github.io",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 1
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "1.0.32"
+  },
+  "ctime": 1506574082,
+  "expire_in": 504576000,
+  "prev": "e91144caca93224010e504f63ac34655d27007d95327c0c63178335e8297f1d7",
+  "seqno": 17,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEg3cpPPpc1qIhQMMtoz4ajFqFX50s09ITwqTZeHccCgWIKp3BheWxvYWTFA0d7ImJvZHkiOnsia2V5Ijp7ImVsZGVzdF9raWQiOiIwMTIwMWQ3M2E3OTAzODM5MTA2MzRlNzgyYWIzNjAwMjUwZjk3MmFiYWU4NTJjNmUxNTg1NGI4ZmUwMjUyOWI2NTIwYjBhIiwiaG9zdCI6ImtleWJhc2UuaW8iLCJraWQiOiIwMTIwZGRjYTRmM2U5NzM1YTg4ODUwMzBjYjY4Y2Y4NmEzMTZhMTU3ZTc0YjM0ZjQ4NGYwYTkzNjVlMWRjNzAyODE2MjBhIiwidWlkIjoiYWQwOTc0NzZkMGUwYjhkYjc0NTkxMGM1YjdmNjY5MTkiLCJ1c2VybmFtZSI6InRlZG9wcyJ9LCJtZXJrbGVfcm9vdCI6eyJjdGltZSI6MTUwNjU3NDA3MywiaGFzaCI6IjU5MzE0OWMxYmZjODUyYjgyMWUwMTRhZjdhN2UxNDYxNDMzMTI3ZGIzMDI5YzliY2IwZTIzNGZlMzlhZTU3M2M4MTlkZGUyZWUwMDY3N2M0MGExNWQ1MzFkN2YyNDQ4NDIwODgzZGU2ZDRhN2RlYzMwYTQxMTRkNWIyMmM5NGU3IiwiaGFzaF9tZXRhIjoiNTBhMThmYzI2Y2Y2MWJkMTk0ZjhhZmZlYTg0OTQzOTM1YzdiOWFjOTNjZjc5Mjk2YWI1MGU5Yjk2OTcwZGI5NSIsInNlcW5vIjoxNDY4ODQxfSwic2VydmljZSI6eyJob3N0bmFtZSI6InRlZG9wcy5naXRodWIuaW8iLCJwcm90b2NvbCI6Imh0dHBzOiJ9LCJ0eXBlIjoid2ViX3NlcnZpY2VfYmluZGluZyIsInZlcnNpb24iOjF9LCJjbGllbnQiOnsibmFtZSI6ImtleWJhc2UuaW8gZ28gY2xpZW50IiwidmVyc2lvbiI6IjEuMC4zMiJ9LCJjdGltZSI6MTUwNjU3NDA4MiwiZXhwaXJlX2luIjo1MDQ1NzYwMDAsInByZXYiOiJlOTExNDRjYWNhOTMyMjQwMTBlNTA0ZjYzYWMzNDY1NWQyNzAwN2Q5NTMyN2MwYzYzMTc4MzM1ZTgyOTdmMWQ3Iiwic2Vxbm8iOjE3LCJ0YWciOiJzaWduYXR1cmUifaNzaWfEQJj6YA7VA+ASkV6W4MmFcFte6ZqC7R8OvstUhyM2dWDEBCpczeRpLwXMGp2ZPfC3Xgz8vyKHdR6k/+LtnoJ7ZQSoc2lnX3R5cGUgpGhhc2iCpHR5cGUIpXZhbHVlxCCR6gptbERiTVVUxHtWcLzUNlpmm6LYPsMDSI4gHRpouaN0YWfNAgKndmVyc2lvbgE=
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/tedops
+
+==================================================================
